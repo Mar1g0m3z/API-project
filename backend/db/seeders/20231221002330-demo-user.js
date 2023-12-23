@@ -13,25 +13,25 @@ module.exports = {
 		await User.bulkCreate(
 			[
 				{
-					email: "demo@user.io",
-					username: "Demo-lition",
-					hashedPassword: bcrypt.hashSync("password"),
-					firstName: "Demo",
-					lastName: "Lition",
+					email: "zelda@hyrule.com",
+					username: "PrincessZelda",
+					hashedPassword: bcrypt.hashSync("Triforce123"),
+					firstName: "Zelda",
+					lastName: "Hyrule",
 				},
 				{
-					email: "user1@user.io",
-					username: "FakeUser1",
-					hashedPassword: bcrypt.hashSync("password2"),
-					firstName: "Fake",
-					lastName: "User1",
+					email: "mario@mushroomkingdom.com",
+					username: "SuperMario",
+					hashedPassword: bcrypt.hashSync("Its-aMeMario"),
+					firstName: "Mario",
+					lastName: "Bros",
 				},
 				{
-					email: "user2@user.io",
-					username: "FakeUser2",
-					hashedPassword: bcrypt.hashSync("password3"),
-					firstName: "Fake",
-					lastName: "User2",
+					email: "dragonborn@skyrim.com",
+					username: "Dragonborn",
+					hashedPassword: bcrypt.hashSync("FusRoDah456"),
+					firstName: "Dragon",
+					lastName: "Born",
 				},
 			],
 			{ validate: true }
@@ -43,7 +43,7 @@ module.exports = {
 		return queryInterface.bulkDelete(
 			options,
 			{
-				username: { [Op.in]: ["Demo-lition", "FakeUser1", "FakeUser2"] },
+				username: { [Op.in]: ["PrincessZelda", "SuperMario", "Dragonborn"] },
 			},
 			{}
 		);
