@@ -65,9 +65,13 @@ module.exports = {
 	async down(queryInterface, Sequelize) {
 		options.tableName = "Spots";
 		const Op = Sequelize.Op;
-		return queryInterface.bulkDelete(options, {
-			name: { [Op.in]: ["Hyrule Castle", "Mushroom Kingdom", "Whiterun"] },
-		});
+		return queryInterface.bulkDelete(
+			options,
+			{
+				name: { [Op.in]: ["Hyrule Castle", "Mushroom Kingdom", "Whiterun"] },
+			},
+			{}
+		);
 		/**
 		 * Add commands to revert seed here.
 		 *

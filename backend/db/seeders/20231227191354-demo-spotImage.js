@@ -39,9 +39,13 @@ module.exports = {
 	async down(queryInterface, Sequelize) {
 		options.tableName = "SpotImages";
 		const Op = Sequelize.Op;
-		return queryInterface.bulkDelete(options, {
-			preview: { [Op.in]: [true] },
-		});
+		return queryInterface.bulkDelete(
+			options,
+			{
+				preview: { [Op.in]: [true] },
+			},
+			{}
+		);
 		/**
 		 * Add commands to revert seed here.
 		 *
