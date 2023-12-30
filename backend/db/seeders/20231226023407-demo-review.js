@@ -12,8 +12,8 @@ module.exports = {
 				stars: 5,
 			},
 			{
-				spotId: 2, // Existing spot ID
-				userId: 2, // Existing user ID
+				spotId: 2,
+				userId: 2,
 				review: "W-what are they making mushroom soup out of?",
 				stars: 2,
 			},
