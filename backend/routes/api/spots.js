@@ -26,7 +26,19 @@ router.get("/", async (req, res) => {
 
 				return {
 					id: spot.id,
-					// Add other necessary Spot attributes
+					id: spot.id,
+					ownerId: spot.ownerId,
+					address: spot.address,
+					city: spot.city,
+					state: spot.state,
+					country: spot.country,
+					lat: spot.lat,
+					lng: spot.lng,
+					name: spot.name,
+					description: spot.description,
+					price: spot.price,
+					createdAt: spot.createdAt,
+					updatedAt: spot.updatedAt,
 					spotImages,
 					avgStars: reviewAvg ? reviewAvg.dataValues.avgStars : null,
 				};
@@ -45,23 +57,23 @@ router.get("/current", requireAuth, async (req, res) => {
 
 		const spots = await Spot.findAll({
 			where: { ownerId: userId },
-			attributes: [
-				"id",
-				"ownerId",
-				"address",
-				"city",
-				"state",
-				"country",
-				"lat",
-				"lng",
-				"name",
-				"description",
-				"price",
-				"createdAt",
-				"updatedAt",
-			],
+			// attributes: [
+			// 	"id",
+			// 	"ownerId",
+			// 	"address",
+			// 	"city",
+			// 	"state",
+			// 	"country",
+			// 	"lat",
+			// 	"lng",
+			// 	"name",
+			// 	"description",
+			// 	"price",
+			// 	"createdAt",
+			// 	"updatedAt",
+			// ],
 		});
-		// console.log(spots);
+		console.log(spots);
 		const spotsResponse = await Promise.all(
 			spots.map(async (spot) => {
 				const reviews = await Review.findAll({
