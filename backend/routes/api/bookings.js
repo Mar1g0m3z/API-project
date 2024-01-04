@@ -148,7 +148,6 @@ router.delete("/:bookingId", requireAuth, async (req, res) => {
 		return res.status(403).json({ message: "Unauthorized access" });
 	}
 
-	// Check if the booking has already started
 	const currentDate = new Date();
 	const bookingStartDate = new Date(booking.startDate);
 	if (currentDate > bookingStartDate) {
@@ -157,7 +156,6 @@ router.delete("/:bookingId", requireAuth, async (req, res) => {
 			.json({ message: "Bookings that have been started can't be deleted" });
 	}
 
-	// Perform the deletion
 	await booking.destroy();
 
 	res.status(200).json({ message: "Successfully deleted" });
