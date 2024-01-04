@@ -1,9 +1,14 @@
 const express = require("express");
-const { Op } = require("sequelize");
 const { Sequelize } = require("sequelize");
-const { Spot, SpotImage, Review, User } = require("../../db/models");
+const {
+	Spot,
+	SpotImage,
+	Review,
+	User,
+	ReviewImage,
+} = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
-const { validationResult } = require("express-validator");
+
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -25,7 +30,6 @@ router.get("/", async (req, res) => {
 				});
 
 				return {
-					id: spot.id,
 					id: spot.id,
 					ownerId: spot.ownerId,
 					address: spot.address,
@@ -73,7 +77,7 @@ router.get("/current", requireAuth, async (req, res) => {
 			// 	"updatedAt",
 			// ],
 		});
-		console.log(spots);
+		// console.log(spots);
 		const spotsResponse = await Promise.all(
 			spots.map(async (spot) => {
 				const reviews = await Review.findAll({
@@ -244,6 +248,61 @@ const validateSpot = async (req, res) => {
 	}
 };
 
+router.get("/:spotId/reviews", async (req, res) => {
+	const spotId = req.params.spotId;
+
+	try {
+		// Find reviews for the specified spot ID
+		const reviews = await Review.findAll({
+			where: { spotId: spotId },
+			attributes: [
+				"id",
+				"userId",
+				"spotId",
+				"review",
+				"stars",
+				"createdAt",
+				"updatedAt",
+			],
+		});
+
+		if (!reviews || reviews.length === 0) {
+			return res.status(404).json({ message: "Spot couldn't be found" });
+		}
+
+		// Fetch details for each review including user and review images
+		const reviewsWithDetails = await Promise.all(
+			reviews.map(async (review) => {
+				const user = await User.findByPk(review.userId, {
+					attributes: ["id", "firstName", "lastName"],
+				});
+
+				const reviewImages = await ReviewImage.findAll({
+					where: { reviewId: review.id },
+					attributes: ["id", "url"],
+				});
+
+				return {
+					id: review.id,
+					userId: review.userId,
+					spotId: review.spotId,
+					review: review.review,
+					stars: review.stars,
+					createdAt: review.createdAt,
+					updatedAt: review.updatedAt,
+					User: user,
+					ReviewImages: reviewImages,
+				};
+			})
+		);
+
+		res.status(200).json({ Reviews: reviewsWithDetails });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
+	}
+});
+
 router.post("/", requireAuth, async (req, res) => {
 	const validation = await validateSpot(req, res);
 	if (validation !== true) return;
@@ -323,6 +382,46 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
 		url: newImage.url,
 		preview: newImage.preview,
 	});
+});
+
+router.post("/:spotId/reviews", requireAuth, async (req, res) => {
+	const { spotId } = req.params;
+	const userId = req.user.id;
+	const { review, stars } = req.body;
+
+	const spot = await Spot.findByPk(spotId);
+	if (!spot) {
+		return res.status(404).json({ message: "Spot couldn't be found" });
+	}
+
+	const existingReview = await Review.findOne({
+		where: { userId: userId, spotId: spotId },
+	});
+	if (existingReview) {
+		return res
+			.status(403)
+			.json({ message: "User already has a review for this spot" });
+	}
+
+	const errors = {};
+	if (!review) {
+		errors.review = "Review text is required";
+	}
+	if (!Number.isInteger(stars) || stars < 1 || stars > 5) {
+		errors.stars = "Stars must be an integer from 1 to 5";
+	}
+	if (Object.keys(errors).length > 0) {
+		return res.status(400).json({ message: "Bad Request", errors });
+	}
+
+	const newReview = await Review.create({
+		userId,
+		spotId,
+		review,
+		stars,
+	});
+
+	res.status(201).json(newReview);
 });
 
 router.put("/:spotId", requireAuth, async (req, res) => {
