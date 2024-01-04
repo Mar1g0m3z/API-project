@@ -6,7 +6,9 @@ const {
 	Review,
 	User,
 	ReviewImage,
+	Booking,
 } = require("../../db/models");
+
 const { requireAuth } = require("../../utils/auth");
 
 const router = express.Router();
@@ -270,7 +272,6 @@ router.get("/:spotId/reviews", async (req, res) => {
 			return res.status(404).json({ message: "Spot couldn't be found" });
 		}
 
-		// Fetch details for each review including user and review images
 		const reviewsWithDetails = await Promise.all(
 			reviews.map(async (review) => {
 				const user = await User.findByPk(review.userId, {
@@ -297,6 +298,65 @@ router.get("/:spotId/reviews", async (req, res) => {
 		);
 
 		res.status(200).json({ Reviews: reviewsWithDetails });
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
+	}
+});
+
+router.get("/:spotId/bookings", requireAuth, async (req, res) => {
+	try {
+		const spotId = req.params.spotId;
+		const userId = req.user.id;
+
+		const spot = await Spot.findByPk(spotId);
+		if (!spot) {
+			return res.status(404).json({ message: "Spot couldn't be found" });
+		}
+
+		const isOwner = spot.ownerId === userId;
+
+		const user = await User.findByPk(userId, {
+			attributes: ["id", "firstName", "lastName"],
+		});
+
+		let formattedBookings = [];
+		if (isOwner) {
+			const bookings = await Booking.findAll({
+				where: { spotId },
+				include: {
+					model: User,
+					as: "User",
+					attributes: ["id", "firstName", "lastName"],
+				},
+			});
+			formattedBookings = bookings.map((booking) => ({
+				User: {
+					id: booking.User.id,
+					firstName: booking.User.firstName,
+					lastName: booking.User.lastName,
+				},
+				id: booking.id,
+				spotId: booking.spotId,
+				userId: booking.userId,
+				startDate: booking.startDate,
+				endDate: booking.endDate,
+				createdAt: booking.createdAt,
+				updatedAt: booking.updatedAt,
+			}));
+		} else {
+			const bookings = await Booking.findAll({
+				where: { spotId },
+				attributes: ["spotId", "startDate", "endDate"],
+			});
+			formattedBookings = bookings.map((booking) => ({
+				spotId: booking.spotId,
+				startDate: booking.startDate,
+				endDate: booking.endDate,
+			}));
+		}
+
+		return res.status(200).json({ User: user, Bookings: formattedBookings });
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ message: "Internal Server Error" });
@@ -422,6 +482,82 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
 	});
 
 	res.status(201).json(newReview);
+});
+
+router.post("/:spotId/bookings", requireAuth, async (req, res) => {
+	const { spotId } = req.params;
+	const { startDate, endDate } = req.body;
+	const userId = req.user.id;
+
+	try {
+		const spot = await Spot.findByPk(spotId);
+
+		if (!spot) {
+			return res.status(404).json({ message: "Spot couldn't be found" });
+		}
+
+		if (spot.ownerId === userId) {
+			return res.status(403).json({ message: "You can't book your own spot" });
+		}
+
+		const currentDate = new Date();
+		const selectedStartDate = new Date(startDate);
+		const selectedEndDate = new Date(endDate);
+
+		if (selectedStartDate < currentDate) {
+			return res
+				.status(400)
+				.json({ errors: { startDate: "Start date cannot be in the past" } });
+		}
+
+		if (selectedEndDate <= selectedStartDate) {
+			return res
+				.status(400)
+				.json({ errors: { endDate: "End date must be after the start date" } });
+		}
+
+		const existingBooking = await Booking.findOne({
+			where: {
+				spotId,
+				[Op.or]: [
+					{
+						[Op.and]: [
+							{ startDate: { [Op.lte]: selectedStartDate } },
+							{ endDate: { [Op.gt]: selectedStartDate } },
+						],
+					},
+					{
+						[Op.and]: [
+							{ startDate: { [Op.lt]: selectedEndDate } },
+							{ endDate: { [Op.gte]: selectedEndDate } },
+						],
+					},
+				],
+			},
+		});
+
+		if (existingBooking) {
+			return res.status(403).json({
+				message: "Sorry, this spot is already booked for the specified dates",
+				errors: {
+					startDate: "Start date conflicts with an existing booking",
+					endDate: "End date conflicts with an existing booking",
+				},
+			});
+		}
+
+		const newBooking = await Booking.create({
+			spotId,
+			userId,
+			startDate: selectedStartDate,
+			endDate: selectedEndDate,
+		});
+
+		res.status(200).json(newBooking);
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
+	}
 });
 
 router.put("/:spotId", requireAuth, async (req, res) => {
