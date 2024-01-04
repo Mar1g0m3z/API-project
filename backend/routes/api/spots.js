@@ -15,6 +15,88 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
 	try {
+		const {
+			page = 1,
+			size = 20,
+			minLat,
+			maxLat,
+			minLng,
+			maxLng,
+			minPrice,
+			maxPrice,
+		} = req.query;
+
+		if (
+			page < 1 ||
+			size < 1 ||
+			minLat > maxLat ||
+			minLng > maxLng ||
+			minPrice < 0 ||
+			maxPrice < 0
+		) {
+			return res.status(400).json({
+				message: "Bad Request",
+				errors: {
+					page:
+						page < 1 ? "Page must be greater than or equal to 1" : undefined,
+					size:
+						size < 1 ? "Size must be greater than or equal to 1" : undefined,
+					maxLat: minLat > maxLat ? "Maximum latitude is invalid" : undefined,
+					minLat: minLat > maxLat ? "Minimum latitude is invalid" : undefined,
+					minLng: minLng > maxLng ? "Maximum longitude is invalid" : undefined,
+					maxLng: minLng > maxLng ? "Minimum longitude is invalid" : undefined,
+					minPrice:
+						minPrice < 0
+							? "Minimum price must be greater than or equal to 0"
+							: undefined,
+					maxPrice:
+						maxPrice < 0
+							? "Maximum price must be greater than or equal to 0"
+							: undefined,
+				},
+			});
+		}
+
+		const filters = {};
+		if (minLat && maxLat) filters.lat = { [Op.between]: [minLat, maxLat] };
+		if (minLng && maxLng) filters.lng = { [Op.between]: [minLng, maxLng] };
+		if (minPrice && maxPrice)
+			filters.price = { [Op.between]: [minPrice, maxPrice] };
+
+		const spots = await Spot.findAll({
+			where: filters,
+			limit: size,
+			offset: (page - 1) * size,
+			attributes: [
+				"id",
+				"ownerId",
+				"address",
+				"city",
+				"state",
+				"country",
+				"lat",
+				"lng",
+				"name",
+				"description",
+				"price",
+				"createdAt",
+				"updatedAt",
+			],
+		});
+
+		res.status(200).json({
+			Spots: spots,
+			page: Number(page),
+			size: spots.length,
+		});
+	} catch (error) {
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
+	}
+});
+
+router.get("/", async (req, res) => {
+	try {
 		const spots = await Spot.findAll();
 
 		const spotsResponse = await Promise.all(

@@ -1,0 +1,35 @@
+const express = require("express");
+const { Sequelize } = require("sequelize");
+const {
+	Spot,
+	SpotImage,
+	Review,
+	User,
+	ReviewImage,
+	Booking,
+} = require("../../db/models");
+const { Op } = require("sequelize");
+const { requireAuth } = require("../../utils/auth");
+
+const router = express.Router();
+
+router.delete("/:imageId", requireAuth, async (req, res) => {
+	const { imageId } = req.params;
+	const userId = req.user.id;
+
+	const spotImage = await SpotImage.findByPk(imageId);
+
+	if (!spotImage) {
+		return res.status(404).json({ message: "Spot Image couldn't be found" });
+	}
+	const spot = await Spot.findByPk(spotImage.spotId);
+
+	if (!spot || spot.ownerId !== userId) {
+		return res.status(403).json({ message: "Unauthorized access" });
+	}
+	await spotImage.destroy();
+
+	res.status(200).json({ message: "Successfully deleted" });
+});
+
+module.exports = router;

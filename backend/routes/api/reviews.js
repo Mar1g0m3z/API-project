@@ -60,7 +60,8 @@ router.get("/current", requireAuth, async (req, res) => {
 				});
 
 				spot = spot.toJSON();
-				spot.previewImage = spotImages[0].url;
+
+				spot.previewImage = spotImages.length > 0 ? spotImages[0].url : null;
 
 				return {
 					id: review.id,
