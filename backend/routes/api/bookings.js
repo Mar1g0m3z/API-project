@@ -29,7 +29,6 @@ router.get("/current", requireAuth, async (req, res) => {
 			],
 		});
 
-		// Fetch Spot Image URL for previewImage
 		const spotImage = await SpotImage.findOne({
 			where: { spotId: booking.spotId },
 			attributes: ["url"],
@@ -83,14 +82,12 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
 					spotId: booking.spotId,
 					[Op.or]: [
 						{
-							[Op.and]: [
-								{ startDate: { [Op.lte]: selectedStartDate } },
-								{ endDate: { [Op.gt]: selectedStartDate } },
-							],
+							startDate: { [Op.between]: [selectedStartDate, selectedEndDate] },
 						},
+						{ endDate: { [Op.between]: [selectedStartDate, selectedEndDate] } },
 						{
 							[Op.and]: [
-								{ startDate: { [Op.lt]: selectedEndDate } },
+								{ startDate: { [Op.lte]: selectedStartDate } },
 								{ endDate: { [Op.gte]: selectedEndDate } },
 							],
 						},

@@ -567,38 +567,10 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 			return res.status(403).json({ message: "You can't book your own spot" });
 		}
 
-		const currentDate = new Date();
 		const selectedStartDate = new Date(startDate);
 		const selectedEndDate = new Date(endDate);
 
-		const existingBooking = await Booking.findOne({
-			where: {
-				spotId,
-				[Op.or]: [
-					{
-						[Op.and]: [
-							{ startDate: { [Op.lte]: selectedStartDate } },
-							{ endDate: { [Op.gt]: selectedStartDate } },
-						],
-					},
-					{
-						[Op.and]: [
-							{ startDate: { [Op.lt]: selectedEndDate } },
-							{ endDate: { [Op.gte]: selectedEndDate } },
-						],
-					},
-				],
-			},
-		});
-		if (existingBooking) {
-			return res.status(403).json({
-				message: "Sorry, this spot is already booked for the specified dates",
-				errors: {
-					startDate: "Start date conflicts with an existing booking",
-					endDate: "End date conflicts with an existing booking",
-				},
-			});
-		}
+		const currentDate = new Date();
 		if (selectedStartDate < currentDate) {
 			return res
 				.status(400)
@@ -609,6 +581,32 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 			return res
 				.status(400)
 				.json({ errors: { endDate: "End date must be after the start date" } });
+		}
+
+		const existingBooking = await Booking.findOne({
+			where: {
+				spotId,
+				[Op.or]: [
+					{ startDate: { [Op.between]: [selectedStartDate, selectedEndDate] } },
+					{ endDate: { [Op.between]: [selectedStartDate, selectedEndDate] } },
+					{
+						[Op.and]: [
+							{ startDate: { [Op.lte]: selectedStartDate } },
+							{ endDate: { [Op.gte]: selectedEndDate } },
+						],
+					},
+				],
+			},
+		});
+
+		if (existingBooking) {
+			return res.status(403).json({
+				message: "Sorry, this spot is already booked for the specified dates",
+				errors: {
+					startDate: "Start date conflicts with an existing booking",
+					endDate: "End date conflicts with an existing booking",
+				},
+			});
 		}
 
 		const newBooking = await Booking.create({
