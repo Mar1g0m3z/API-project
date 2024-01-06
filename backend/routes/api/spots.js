@@ -63,40 +63,6 @@ router.get("/", async (req, res) => {
 		if (minPrice && maxPrice)
 			filters.price = { [Op.between]: [minPrice, maxPrice] };
 
-		const spots = await Spot.findAll({
-			where: filters,
-			limit: size,
-			offset: (page - 1) * size,
-			attributes: [
-				"id",
-				"ownerId",
-				"address",
-				"city",
-				"state",
-				"country",
-				"lat",
-				"lng",
-				"name",
-				"description",
-				"price",
-				"createdAt",
-				"updatedAt",
-			],
-		});
-
-		res.status(200).json({
-			Spots: spots,
-			page: Number(page),
-			size: spots.length,
-		});
-	} catch (error) {
-		console.error(error);
-		res.status(500).json({ message: "Internal Server Error" });
-	}
-});
-
-router.get("/", async (req, res) => {
-	try {
 		const spots = await Spot.findAll();
 
 		const spotsResponse = await Promise.all(
@@ -113,6 +79,14 @@ router.get("/", async (req, res) => {
 					],
 				});
 
+				const reviewImages = await ReviewImage.findAll({
+					include: {
+						model: Review,
+						where: { spotId: spot.id },
+					},
+					attributes: ["url"],
+				});
+
 				return {
 					id: spot.id,
 					ownerId: spot.ownerId,
@@ -127,15 +101,21 @@ router.get("/", async (req, res) => {
 					price: spot.price,
 					createdAt: spot.createdAt,
 					updatedAt: spot.updatedAt,
-					spotImages,
+					previewImage: spotImages[0].url,
 					avgStars: reviewAvg ? reviewAvg.dataValues.avgStars : null,
+					// reviewImages,
 				};
 			})
 		);
 
-		res.status(200).json({ spots: spotsResponse });
+		res.status(200).json({
+			Spots: spotsResponse,
+			page: Number(page),
+			size: spots.length,
+		});
 	} catch (error) {
-		res.status(500).json({ message: "Internal server error" });
+		console.error(error);
+		res.status(500).json({ message: "Internal Server Error" });
 	}
 });
 
