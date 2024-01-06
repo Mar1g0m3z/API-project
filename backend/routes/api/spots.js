@@ -566,18 +566,6 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 		const selectedStartDate = new Date(startDate);
 		const selectedEndDate = new Date(endDate);
 
-		if (selectedStartDate < currentDate) {
-			return res
-				.status(400)
-				.json({ errors: { startDate: "Start date cannot be in the past" } });
-		}
-
-		if (selectedEndDate <= selectedStartDate) {
-			return res
-				.status(400)
-				.json({ errors: { endDate: "End date must be after the start date" } });
-		}
-
 		const existingBooking = await Booking.findOne({
 			where: {
 				spotId,
@@ -597,7 +585,6 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 				],
 			},
 		});
-
 		if (existingBooking) {
 			return res.status(403).json({
 				message: "Sorry, this spot is already booked for the specified dates",
@@ -606,6 +593,17 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 					endDate: "End date conflicts with an existing booking",
 				},
 			});
+		}
+		if (selectedStartDate < currentDate) {
+			return res
+				.status(400)
+				.json({ errors: { startDate: "Start date cannot be in the past" } });
+		}
+
+		if (selectedEndDate <= selectedStartDate) {
+			return res
+				.status(400)
+				.json({ errors: { endDate: "End date must be after the start date" } });
 		}
 
 		const newBooking = await Booking.create({
