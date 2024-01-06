@@ -315,6 +315,11 @@ const validateSpot = async (req, res) => {
 router.get("/:spotId/reviews", async (req, res) => {
 	const spotId = req.params.spotId;
 
+	const spot = await Spot.findByPk(spotId);
+
+	if (!spot) {
+		return res.status(404).json({ message: "Spot couldn't be found" });
+	}
 	try {
 		// Find reviews for the specified spot ID
 		const reviews = await Review.findAll({
@@ -331,7 +336,7 @@ router.get("/:spotId/reviews", async (req, res) => {
 		});
 
 		if (!reviews || reviews.length === 0) {
-			return res.status(404).json({ message: "Spot couldn't be found" });
+			return res.status(200).json({ Reviews: [] }); // Return an empty array if no reviews found
 		}
 
 		const reviewsWithDetails = await Promise.all(

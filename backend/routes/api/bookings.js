@@ -1,6 +1,6 @@
 const express = require("express");
 const { Sequelize } = require("sequelize");
-const { Booking, Spot, User } = require("../../db/models");
+const { Booking, Spot, User, SpotImage } = require("../../db/models");
 const { requireAuth } = require("../../utils/auth");
 const { Op } = require("sequelize");
 const router = express.Router();
@@ -29,7 +29,15 @@ router.get("/current", requireAuth, async (req, res) => {
 			],
 		});
 
+		// Fetch Spot Image URL for previewImage
+		const spotImage = await SpotImage.findOne({
+			where: { spotId: booking.spotId },
+			attributes: ["url"],
+		});
+
 		spot = spot.toJSON();
+
+		spot.previewImage = spotImage ? spotImage.url : null;
 
 		bookingsWithSpotDetails.push({
 			id: booking.id,
@@ -69,6 +77,36 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
 		const selectedEndDate = new Date(endDate);
 
 		if (selectedStartDate < currentDate) {
+			const existingBooking = await Booking.findOne({
+				where: {
+					id: { [Op.ne]: bookingId },
+					spotId: booking.spotId,
+					[Op.or]: [
+						{
+							[Op.and]: [
+								{ startDate: { [Op.lte]: selectedStartDate } },
+								{ endDate: { [Op.gt]: selectedStartDate } },
+							],
+						},
+						{
+							[Op.and]: [
+								{ startDate: { [Op.lt]: selectedEndDate } },
+								{ endDate: { [Op.gte]: selectedEndDate } },
+							],
+						},
+					],
+				},
+			});
+
+			if (existingBooking) {
+				return res.status(403).json({
+					message: "Sorry, this spot is already booked for the specified dates",
+					errors: {
+						startDate: "Start date conflicts with an existing booking",
+						endDate: "End date conflicts with an existing booking",
+					},
+				});
+			}
 			return res
 				.status(400)
 				.json({ errors: { startDate: "Start date cannot be in the past" } });
@@ -84,37 +122,6 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
 			return res
 				.status(403)
 				.json({ message: "Past bookings can't be modified" });
-		}
-
-		const existingBooking = await Booking.findOne({
-			where: {
-				id: { [Op.ne]: bookingId },
-				spotId: booking.spotId,
-				[Op.or]: [
-					{
-						[Op.and]: [
-							{ startDate: { [Op.lte]: selectedStartDate } },
-							{ endDate: { [Op.gt]: selectedStartDate } },
-						],
-					},
-					{
-						[Op.and]: [
-							{ startDate: { [Op.lt]: selectedEndDate } },
-							{ endDate: { [Op.gte]: selectedEndDate } },
-						],
-					},
-				],
-			},
-		});
-
-		if (existingBooking) {
-			return res.status(403).json({
-				message: "Sorry, this spot is already booked for the specified dates",
-				errors: {
-					startDate: "Start date conflicts with an existing booking",
-					endDate: "End date conflicts with an existing booking",
-				},
-			});
 		}
 
 		booking.startDate = selectedStartDate;
