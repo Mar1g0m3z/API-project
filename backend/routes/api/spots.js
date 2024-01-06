@@ -627,13 +627,13 @@ router.put("/:spotId", requireAuth, async (req, res) => {
 	const userId = req.user.id;
 	const spot = await Spot.findByPk(spotId);
 
+	if (!spot) {
+		return res.status(404).json({ message: "Spot couldn't be found" });
+	}
 	if (spot.ownerId !== userId) {
 		return res
 			.status(403)
 			.json({ message: "You are not authorized to add an image to this spot" });
-	}
-	if (!spot) {
-		return res.status(404).json({ message: "Spot couldn't be found" });
 	}
 
 	const { address, city, state, country, lat, lng, name, description, price } =
