@@ -87,6 +87,8 @@ router.get("/", async (req, res) => {
 					attributes: ["url"],
 				});
 
+				const previewImage = spotImages.length > 0 ? spotImages[0].url : null;
+
 				return {
 					id: spot.id,
 					ownerId: spot.ownerId,
@@ -101,13 +103,12 @@ router.get("/", async (req, res) => {
 					price: spot.price,
 					createdAt: spot.createdAt,
 					updatedAt: spot.updatedAt,
-					previewImage: spotImages[0].url,
+					previewImage,
 					avgStars: reviewAvg ? reviewAvg.dataValues.avgStars : null,
 					// reviewImages,
 				};
 			})
 		);
-
 		res.status(200).json({
 			Spots: spotsResponse,
 			page: Number(page),
