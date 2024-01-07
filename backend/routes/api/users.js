@@ -26,6 +26,16 @@ const validateSignup = [
 
 router.post("/", validateSignup, async (req, res) => {
 	const { email, password, username, firstName, lastName } = req.body;
+
+	if (!email || !password || !username || !firstName || !lastName) {
+		return res.status(400).json({
+			message: "Bad Request",
+			errors: {
+				common: "All fields are required",
+			},
+		});
+	}
+
 	const existingUserWithEmail = await User.findOne({ where: { email } });
 	const existingUserWithUsername = await User.findOne({ where: { username } });
 

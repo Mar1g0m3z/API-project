@@ -88,7 +88,7 @@ router.get("/current", requireAuth, async (req, res) => {
 router.post("/:reviewId/images", requireAuth, async (req, res) => {
 	const userId = req.user.id;
 	const { reviewId } = req.params;
-	const { url } = req.body;
+	const { url, preview } = req.body;
 
 	try {
 		const review = await Review.findByPk(reviewId);
@@ -114,9 +114,16 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
 		const createdImage = await ReviewImage.create({
 			reviewId,
 			url,
+			preview,
 		});
 
-		return res.status(200).json(createdImage);
+		const response = {
+			id: createdImage.id,
+			url: createdImage.url,
+			preview: createdImage.preview,
+		};
+
+		return res.status(200).json(response);
 	} catch (error) {
 		console.error(error);
 		return res.status(500).json({ message: "Internal Server Error" });

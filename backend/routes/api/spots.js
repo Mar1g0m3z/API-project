@@ -423,7 +423,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
 			}));
 		}
 
-		return res.status(200).json({ User: user, Bookings: formattedBookings });
+		return res.status(200).json({ Bookings: formattedBookings });
 	} catch (error) {
 		console.error(error);
 		res.status(500).json({ message: "Internal Server Error" });
@@ -569,8 +569,8 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 
 		const selectedStartDate = new Date(startDate);
 		const selectedEndDate = new Date(endDate);
-
 		const currentDate = new Date();
+
 		if (selectedStartDate < currentDate) {
 			return res
 				.status(400)
@@ -660,7 +660,7 @@ router.put("/:spotId", requireAuth, async (req, res) => {
 		return res.status(400).json({ message: "Bad Request", errors });
 	}
 
-	spot.address = address;
+	spot.address = address || spot.address;
 	spot.city = city || spot.city;
 	spot.state = state || spot.state;
 	spot.country = country || spot.country;
