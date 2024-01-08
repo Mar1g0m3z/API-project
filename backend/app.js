@@ -74,7 +74,7 @@ app.use((err, _req, res, _next) => {
 		title: err.title || "Server Error",
 		message: err.message,
 		errors: err.errors,
-		stack: null,
+		stack: isProduction ? null : err.stack,
 	});
 });
 module.exports = app;
