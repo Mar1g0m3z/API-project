@@ -14,56 +14,62 @@ const { requireAuth } = require("../../utils/auth");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
+	const {
+		page = 1,
+		size = 20,
+		minLat,
+		maxLat,
+		minLng,
+		maxLng,
+		minPrice,
+		maxPrice,
+	} = req.query;
+
+	if (
+		page < 1 ||
+		size < 1 ||
+		minLat > maxLat ||
+		minLng > maxLng ||
+		minPrice < 0 ||
+		maxPrice < 0
+	) {
+		return res.status(400).json({
+			message: "Bad Request",
+			errors: {
+				page: page < 1 ? "Page must be greater than or equal to 1" : undefined,
+				size: size < 1 ? "Size must be greater than or equal to 1" : undefined,
+				maxLat: minLat > maxLat ? "Maximum latitude is invalid" : undefined,
+				minLat: minLat > maxLat ? "Minimum latitude is invalid" : undefined,
+				minLng: minLng > maxLng ? "Maximum longitude is invalid" : undefined,
+				maxLng: minLng > maxLng ? "Minimum longitude is invalid" : undefined,
+				minPrice:
+					minPrice < 0
+						? "Minimum price must be greater than or equal to 0"
+						: undefined,
+				maxPrice:
+					maxPrice < 0
+						? "Maximum price must be greater than or equal to 0"
+						: undefined,
+			},
+		});
+	}
+
+	const filters = {};
+	if (minLat && maxLat) filters.lat = { [Op.between]: [minLat, maxLat] };
+	if (minLng && maxLng) filters.lng = { [Op.between]: [minLng, maxLng] };
+	if (minPrice && maxPrice)
+		filters.price = { [Op.between]: [minPrice, maxPrice] };
+
+	const pageInt = parseInt(page);
+	const sizeInt = parseInt(size);
+	const offset = (pageInt - 1) * sizeInt;
+
 	try {
-		const {
-			page = 1,
-			size = 20,
-			minLat,
-			maxLat,
-			minLng,
-			maxLng,
-			minPrice,
-			maxPrice,
-		} = req.query;
-
-		if (
-			page < 1 ||
-			size < 1 ||
-			minLat > maxLat ||
-			minLng > maxLng ||
-			minPrice < 0 ||
-			maxPrice < 0
-		) {
-			return res.status(400).json({
-				message: "Bad Request",
-				errors: {
-					page:
-						page < 1 ? "Page must be greater than or equal to 1" : undefined,
-					size:
-						size < 1 ? "Size must be greater than or equal to 1" : undefined,
-					maxLat: minLat > maxLat ? "Maximum latitude is invalid" : undefined,
-					minLat: minLat > maxLat ? "Minimum latitude is invalid" : undefined,
-					minLng: minLng > maxLng ? "Maximum longitude is invalid" : undefined,
-					maxLng: minLng > maxLng ? "Minimum longitude is invalid" : undefined,
-					minPrice:
-						minPrice < 0
-							? "Minimum price must be greater than or equal to 0"
-							: undefined,
-					maxPrice:
-						maxPrice < 0
-							? "Maximum price must be greater than or equal to 0"
-							: undefined,
-				},
-			});
-		}
-
-		const filters = {};
-		if (minLat && maxLat) filters.lat = { [Op.between]: [minLat, maxLat] };
-		if (minLng && maxLng) filters.lng = { [Op.between]: [minLng, maxLng] };
-		if (minPrice && maxPrice)
-			filters.price = { [Op.between]: [minPrice, maxPrice] };
-
-		const spots = await Spot.findAll();
+		const spots = await Spot.findAll({
+			where: filters,
+			offset: offset,
+			limit: sizeInt,
+		});
 
 		const spotsResponse = await Promise.all(
 			spots.map(async (spot) => {
@@ -109,9 +115,10 @@ router.get("/", async (req, res) => {
 				};
 			})
 		);
+
 		res.status(200).json({
 			Spots: spotsResponse,
-			page: Number(page),
+			page: pageInt,
 			size: spots.length,
 		});
 	} catch (error) {
@@ -173,7 +180,11 @@ router.get("/current", requireAuth, async (req, res) => {
 					createdAt: spot.createdAt,
 					updatedAt: spot.updatedAt,
 					avgRating:
-						reviews.length > 0 ? reviews[0].dataValues.avgRating : null,
+						reviews.length > 0
+							? reviews[0].dataValues.avgRating !== null
+								? parseFloat(reviews[0].dataValues.avgRating).toFixed(2)
+								: null
+							: null,
 					previewImage: spotImages.length > 0 ? spotImages[0].url : null,
 				};
 			})
