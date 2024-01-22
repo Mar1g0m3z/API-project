@@ -1,0 +1,79 @@
+h1 {
+	text-align: center;
+	font-family: sans-serif;
+}
+
+#modal-content {
+	top: 300px;
+	height: auto;
+	width: 400px;
+	border-radius: 20px;
+	box-shadow: 0 3px 10px rgb(0 0 0 / 0.5);
+	padding-bottom: 50px;
+	/* }box-shadow: [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color]; */
+}
+form.signup {
+	display: flex;
+	/* width: min-content; */
+	/* width: fit-content; */
+	width: 204px;
+	/* height: 20px; */
+	height: fit-content;
+	margin: auto;
+	flex-direction: column;
+	align-items: center;
+	border: 1px black solid;
+	border-radius: 5px;
+	/* border-bottom: none; */
+}
+
+label {
+	box-sizing: content-box;
+	height: 50px;
+
+	/* width: ; */
+
+	display: flex;
+	/* justify-content: center; */
+	/* align-items: center; */
+	border: none;
+}
+input {
+	box-sizing: content-box;
+	height: 47px;
+	border-radius: 4px;
+	width: 200px;
+	/* border-top: none; */
+	border-right: none;
+	border-left: none;
+}
+
+.confirm-pass {
+	border-bottom: none;
+}
+input:focus {
+	border: 10px;
+	height: 48px;
+}
+.sign-in-button {
+	background-color: #e51e53;
+	color: white;
+	width: 205px;
+	height: 50px;
+	border-radius: 6px;
+	border-style: none;
+	box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
+	/* position: relative; */
+	/* top: 1px; */
+}
+button:disabled,
+button[disabled] {
+	border: 1px solid #999999;
+	background-color: #cccccc;
+	color: #666666;
+}
+.error-messages {
+	box-sizing: content-box;
+	color: red;
+	box-shadow: 0 3px 10px rgb(0 0 0 / 0.3);
+}
