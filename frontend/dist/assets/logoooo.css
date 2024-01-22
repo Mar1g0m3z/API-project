@@ -1,0 +1,24 @@
+@charset "utf-8";
+	.image
+{
+	background-image : url(image.png);
+	background-repeat : no-repeat;
+}
+.st0
+{
+	background : #7B7BFF;
+	background : rgba(123, 123, 255, 1);
+	border-style : Solid;
+	border-color : #231F20;
+	border-color : rgba(35, 31, 32, 1);
+	border-width : 1px;
+}
+.st1
+{
+	background : #7B7BFF;
+	background : rgba(123, 123, 255, 1);
+	border-style : Solid;
+	border-color : #231F20;
+	border-color : rgba(35, 31, 32, 1);
+	border-width : 1px;
+}
