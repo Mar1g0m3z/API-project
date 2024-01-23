@@ -1,7 +1,10 @@
 import { NavLink } from "react-router-dom";
 
 const SpotTile = ({ spot }) => {
-	const displayRating = spot.avgStars ? spot.avgStars.toFixed(1) : "New";
+	console.log(spot.avgStars);
+	const displayRating = spot.avgStars
+		? parseFloat(spot.avgStars).toFixed(1)
+		: "New";
 
 	return (
 		<NavLink to={`/spots/${spot.id}`} className='spot-link' title={spot.name}>
