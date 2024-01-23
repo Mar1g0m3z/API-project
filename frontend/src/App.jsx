@@ -1,10 +1,10 @@
+// Import necessary dependencies
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Outlet, createBrowserRouter, RouterProvider } from "react-router-dom";
-// import LoginFormPage from './components/LoginFormPage';
-// import SignupFormPage from './components/SignupFormPage';
-import Navigation from "./components/Navigation/Navigation-bonus";
 import * as sessionActions from "./store/session";
+import Navigation from "./components/Navigation/Navigation-bonus";
+import LandingPage from "./components/LandingPage/LandingPage";
 
 function Layout() {
 	const dispatch = useDispatch();
@@ -19,6 +19,7 @@ function Layout() {
 	return (
 		<>
 			<Navigation isLoaded={isLoaded} />
+
 			{isLoaded && <Outlet />}
 		</>
 	);
@@ -29,17 +30,11 @@ const router = createBrowserRouter([
 		element: <Layout />,
 		children: [
 			{
+				index: true,
 				path: "/",
-				element: <h1>Welcome!</h1>,
+				element: <LandingPage />,
 			},
-			// {
-			//   path: 'login',
-			//   element: <LoginFormPage />
-			// },
-			// {
-			//   path: 'signup',
-			//   element: <SignupFormPage />
-			// }
+
 			{
 				path: "*",
 				element: <h1>Page Not Found</h1>,

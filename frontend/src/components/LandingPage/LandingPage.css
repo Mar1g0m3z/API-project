@@ -1,0 +1,66 @@
+.spot-list {
+	font-family: "Montserrat", sans-serif;
+
+	display: grid;
+	grid-template-columns: repeat(
+		auto-fill,
+		minmax(300px, 1fr)
+	); /* Adjust as needed */
+	grid-gap: 50px; /* Adjust the gap between tiles */
+}
+
+.spot-tile {
+	max-width: 100%;
+	height: 500px; /* Adjust this to set the fixed height for the tiles */
+	box-sizing: border-box;
+
+	overflow: hidden;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.spot-image {
+	width: 100%;
+	height: 500px;
+	object-fit: cover;
+	border-radius: 20px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+	border: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+.spot-name {
+	font-size: 1.5rem; /* Adjust font size as needed */
+	margin-bottom: 10px; /* Adjust margin as needed */
+	padding: 0px;
+}
+
+.spot-link {
+	text-decoration: none; /* Remove underlines */
+	color: inherit; /* Inherit color from parent */
+}
+.display-rating,
+.spot-rating,
+.spot-price,
+.spot-location {
+	margin-top: 0; /* Adjust as needed for spacing between paragraphs */
+	padding: 0px;
+}
+.spot-info {
+	display: flex;
+	justify-content: space-between;
+	width: 100%; /* Ensure the spot-info takes full width */
+}
+.spot-rating {
+	display: flex;
+	align-items: center; /* Align items vertically */
+	margin-right: 5px;
+}
+
+::before {
+	margin-right: 6px;
+	position: relative;
+	/* margin-bottom: 499px; */
+	bottom: 1px;
+}
