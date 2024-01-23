@@ -42,19 +42,17 @@ function SpotPages() {
 					</button>
 				</div>
 				{spot.SpotImages.length > 1 && (
-					<div className='smaller-box'>
-						<ul className='image-list'>
-							{spot.SpotImages.slice(1, 5).map((image) => (
-								<li key={image.id}>
-									<img
-										src={image.url}
-										alt={spot.name}
-										className='spot-image-small'
-									/>
-								</li>
-							))}
-						</ul>
-					</div>
+					<ul className='image-list'>
+						{spot.SpotImages.slice(1, 5).map((image) => (
+							<li key={image.id}>
+								<img
+									src={image.url}
+									alt={spot.name}
+									className='spot-image-small'
+								/>
+							</li>
+						))}
+					</ul>
 				)}
 			</div>
 		</>
