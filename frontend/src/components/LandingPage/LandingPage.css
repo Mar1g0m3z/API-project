@@ -1,6 +1,12 @@
-.spot-list {
+.landing-page {
 	font-family: "Montserrat", sans-serif;
-
+	padding: 0px;
+	margin: 0px;
+}
+.spots-title {
+	font-family: "Montserrat", sans-serif;
+}
+.spot-list {
 	display: grid;
 	grid-template-columns: repeat(
 		auto-fill,
@@ -11,7 +17,7 @@
 
 .spot-tile {
 	max-width: 100%;
-	height: 500px; /* Adjust this to set the fixed height for the tiles */
+	height: 600px; /* Adjust this to set the fixed height for the tiles */
 	box-sizing: border-box;
 
 	overflow: hidden;
@@ -23,7 +29,7 @@
 
 .spot-image {
 	width: 100%;
-	height: 500px;
+	height: 60%;
 	object-fit: cover;
 	border-radius: 20px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);

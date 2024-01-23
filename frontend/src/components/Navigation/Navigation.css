@@ -1,24 +1,13 @@
 body {
 	margin: 0;
 }
-header {
-	position: relative;
-	top: 0;
-	width: 100%;
-	height: 28%;
-	font-family: Circular, Arial, Helvetica, sans-serif;
-	color: #484848;
-	background-color: #fff;
-	border: 1px solid #dce0e0;
-	border-top: none;
-	border-left: none;
-}
 
 .header-ul {
-	margin-top: 0;
 	display: flex;
 	justify-content: space-between;
 	padding: 0;
+	position: relative;
+	top: -100px;
 }
 .logo {
 	width: 105px;

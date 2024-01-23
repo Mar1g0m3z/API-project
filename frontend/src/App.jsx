@@ -5,7 +5,7 @@ import { Outlet, createBrowserRouter, RouterProvider } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation/Navigation-bonus";
 import LandingPage from "./components/LandingPage/LandingPage";
-
+import SpotPages from "./components/SpotPages/SpotPages";
 function Layout() {
 	const dispatch = useDispatch();
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -34,7 +34,11 @@ const router = createBrowserRouter([
 				path: "/",
 				element: <LandingPage />,
 			},
-
+			{
+				index: true,
+				path: "/spots/:spotId",
+				element: <SpotPages />,
+			},
 			{
 				path: "*",
 				element: <h1>Page Not Found</h1>,
