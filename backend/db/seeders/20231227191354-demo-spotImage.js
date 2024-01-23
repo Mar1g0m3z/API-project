@@ -15,6 +15,11 @@ module.exports = {
 				preview: true,
 			},
 			{
+				spotId: 1,
+				url: "https://static.wikia.nocookie.net/nintendo/images/5/54/Hyrule_Castle.jpg/revision/latest/scale-to-width-down/1000?cb=20220929012524&path-prefix=en",
+				preview: false,
+			},
+			{
 				spotId: 2,
 				url: "https://i.pinimg.com/originals/92/ad/c8/92adc8206053a61a127a0376ca3bfc07.jpg",
 				preview: true,
