@@ -1,5 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import Reviews from "../Reviews/Reviews";
+
 import "./SpotPages.css";
 function SpotPages() {
 	const { spotId } = useParams();
@@ -32,6 +34,16 @@ function SpotPages() {
 						className='spot-image-large'
 					/>
 					<p className='spot-location'>{`${spot.city}, ${spot.state}`}</p>
+					<p className='star-rating'>
+						<i className='fas fa-star'></i>
+						{!spot.numReviews ? "New" : spot.avgStarRating.toFixed(1)}
+
+						{spot.numReviews === 0
+							? ""
+							: spot.numReviews === 1
+							? `·${spot.numReviews} Review`
+							: `·${spot.numReviews} Reviews`}
+					</p>
 					<p>Hosted by {spot.Owner?.firstName}</p>
 					<p>{spot.description}</p>
 					<button
@@ -55,6 +67,7 @@ function SpotPages() {
 					</ul>
 				)}
 			</div>
+			<Reviews spot={spot} />
 		</>
 	) : (
 		<div>Loading</div>

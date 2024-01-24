@@ -1,0 +1,17 @@
+input {
+	/* box-sizing: content-box; */
+	height: 47px;
+	/* border-radius: 4px; */
+	/* width: 200px; */
+	/* border-top: none; */
+	/* border-right: none; */
+	/* border-left: none; */
+}
+label {
+	box-sizing: content-box;
+	/* height: 50px; */
+	display: flex;
+	/* justify-content: center; */
+	/* align-items: center; */
+	/* border: none; */
+}

@@ -27,7 +27,7 @@ form.signup {
 	/* border-bottom: none; */
 }
 
-label {
+.signup label {
 	box-sizing: content-box;
 	height: 50px;
 
@@ -38,7 +38,7 @@ label {
 	/* align-items: center; */
 	border: none;
 }
-input {
+.signup input {
 	box-sizing: content-box;
 	height: 47px;
 	border-radius: 4px;

@@ -6,6 +6,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation/Navigation-bonus";
 import LandingPage from "./components/LandingPage/LandingPage";
 import SpotPages from "./components/SpotPages/SpotPages";
+import CreateSpotForm from "./components/CreateSpot/CreateSpotForm";
 function Layout() {
 	const dispatch = useDispatch();
 	const [isLoaded, setIsLoaded] = useState(false);
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
 				path: "/spots/:spotId",
 				element: <SpotPages />,
 			},
+			{ index: true, path: "/spots/new", element: <CreateSpotForm /> },
 			{
 				path: "*",
 				element: <h1>Page Not Found</h1>,
