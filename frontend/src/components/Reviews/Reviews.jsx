@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import CreateReviewModal from "./CreateReviewModal";
 import { getReviews } from "../../store/review";
+import DeleteReviewModal from "./DeleteReviewModal";
 
 function Reviews({ spot }) {
 	const dispatch = useDispatch();
@@ -80,14 +81,24 @@ function Reviews({ spot }) {
 						) : (
 							reviews.map((review) => {
 								return (
-									<li key={review.id}>
-										{`${review.User.firstName}
+									<>
+										<li key={review.id}>
+											{`${review.User.firstName}
 								${review.User.lastName}:
 								 ${review.review}
 
                                  ${monthNames[review.createdAtDate.getMonth()]}
                                  ${review.createdAtDate.getFullYear()}`}
-									</li>
+										</li>
+										{user.id === review.userId ? (
+											<OpenModalButton
+												buttonText="Delete Review"
+												modalComponent={
+													<DeleteReviewModal reviewId={review.id} />
+												}
+											/>
+										) : null}
+									</>
 								);
 							})
 						)}

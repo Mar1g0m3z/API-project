@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import SpotTile from "../LandingPage/SpotTile";
 import { NavLink, useNavigate } from "react-router-dom";
-
+import OpenModalButton from "../OpenModalButton";
+import DeleteSpotModal from "../ManageSpots/DeleteSpotModal";
 function ManageSpots() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -30,7 +31,10 @@ function ManageSpots() {
 							>
 								Update
 							</button>
-							<button>Delete</button>
+							<OpenModalButton
+								buttonText="Delete"
+								modalComponent={<DeleteSpotModal spotId={spot.id} />}
+							></OpenModalButton>
 						</>
 					))}
 				</div>

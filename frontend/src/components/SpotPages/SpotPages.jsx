@@ -21,11 +21,13 @@ function SpotPages() {
 			<h1>{spot.name}</h1>
 			<div className="spot-info">
 				<div className="large-box">
-					<img
-						src={spot.SpotImages[0]?.url}
-						alt={spot.name}
-						className="spot-image-large"
-					/>
+					{spot.SpotImages !== undefined ? (
+						<img
+							src={spot.SpotImages[0]?.url}
+							alt={spot.name}
+							className="spot-image-large"
+						/>
+					) : null}
 					<p className="spot-location">{`${spot.city}, ${spot.state}`}</p>
 					<p className="star-rating">
 						<i className="fas fa-star"></i>
@@ -46,7 +48,7 @@ function SpotPages() {
 						Reserve
 					</button>
 				</div>
-				{spot.SpotImages.length > 1 && (
+				{spot.SpotImages && spot.SpotImages.length > 1 ? (
 					<ul className="image-list">
 						{spot.SpotImages.slice(1, 5).map((image) => (
 							<li key={image.id}>
@@ -58,7 +60,7 @@ function SpotPages() {
 							</li>
 						))}
 					</ul>
-				)}
+				) : null}
 			</div>
 			<Reviews spot={spot} />
 		</>

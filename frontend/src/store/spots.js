@@ -1,5 +1,60 @@
 import { csrfFetch } from "./csrf";
 
+const DELETE_SPOTS = "spots/deleteSpot";
+const deleteSpot = (spotId) => ({
+	type: DELETE_SPOTS,
+	spotId: spotId,
+});
+
+export const deleteUserSpot = (spotId) => async (dispatch) => {
+	try {
+		const response = await csrfFetch(`/api/spots/${spotId}`, {
+			method: "DELETE",
+		});
+		const data = await response.json();
+		if (data) {
+			dispatch(deleteSpot(spotId));
+		}
+	} catch (error) {
+		console.error("Failed to delete spot,error");
+	}
+};
+
+const UPDATE_SPOT = "spots/updateSpot";
+const updateOneSpot = (spot) => ({
+	type: UPDATE_SPOT,
+	payload: spot,
+});
+
+export const updateSpot = (spot) => async (dispatch) => {
+	const { country, address, city, state, lat, lng, description, name, price } =
+		spot;
+	try {
+		const response = await csrfFetch(`/api/spots/${spot.id}/`, {
+			method: "PUT",
+			body: JSON.stringify({
+				country,
+				address,
+				city,
+				state,
+				lat,
+				lng,
+				description,
+				name,
+				price,
+			}),
+		});
+		const data = await response.json();
+		if (data) {
+			dispatch(updateOneSpot(data));
+		}
+		console.log("THIS IS THE DATA FROM UPDATE SPOT", data);
+		return data;
+	} catch (error) {
+		console.error("Failed up update spot", error);
+	}
+};
+
 const GET_USER_SPOTS = "spots/userSpots";
 
 const userSpot = (spots) => ({
@@ -144,6 +199,15 @@ function spotReducer(state = initialState, action) {
 			return { ...state, spot: action.payload };
 		case GET_USER_SPOTS:
 			return { ...state, spots: action.payload };
+		case UPDATE_SPOT:
+			return { ...state, spot: action.payload };
+		case DELETE_SPOTS:
+			return {
+				...state,
+				spots: state.spots.filter((spot) =>
+					spot.id === action.spotId ? false : true
+				),
+			};
 		default:
 			return state;
 	}
