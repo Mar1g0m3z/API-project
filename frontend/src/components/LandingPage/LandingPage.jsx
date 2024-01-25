@@ -21,9 +21,9 @@ const LandingPage = () => {
 	}, []);
 
 	return (
-		<div className='landing-page'>
-			<h1 className='spots-title'>All Spots</h1>
-			<div className='spot-list'>
+		<div className="landing-page">
+			<h1 className="spots-title">All Spots</h1>
+			<div className="spot-list">
 				{spots.map((spot) => (
 					<SpotTile key={spot.id} spot={spot} />
 				))}

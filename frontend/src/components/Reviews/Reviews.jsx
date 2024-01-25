@@ -28,7 +28,7 @@ function Reviews({ spot }) {
 		"December",
 	];
 	const reviews = useSelector((state) => {
-		console.log("state in reviews component", state);
+		// console.log("state in reviews component", state);
 		return state.reviews.reviews;
 	});
 	useEffect(() => {
@@ -61,18 +61,18 @@ function Reviews({ spot }) {
 		<>
 			{console.log(reviews)}
 			{reviews !== null ? (
-				<div className='reviews'>
+				<div className="reviews">
 					<h3>Reviews</h3>
 					{user &&
 					reviews.every((review) => review.userId !== user.id) &&
 					user.id !== spot.ownerId ? (
 						<OpenModalButton
-							buttonText='Write Your Review'
+							buttonText="Write Your Review"
 							modalComponent={<CreateReviewModal spot={spot} />}
 						/>
 					) : null}
 
-					<ul className='review-list'>
+					<ul className="review-list">
 						{reviews.length === 0 &&
 						user !== null &&
 						user.id !== spot.ownerId ? (

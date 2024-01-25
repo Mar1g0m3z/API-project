@@ -1,4 +1,23 @@
 import { csrfFetch } from "./csrf";
+
+const GET_USER_SPOTS = "spots/userSpots";
+
+const userSpot = (spots) => ({
+	type: GET_USER_SPOTS,
+	payload: spots,
+});
+
+export const getUserSpots = () => async (dispatch) => {
+	try {
+		const response = await fetch(`/api/spots/current`, {});
+		const data = await response.json();
+		if (data) {
+			dispatch(userSpot(data.Spots));
+		}
+	} catch (error) {
+		console.error("Failed to fetch spots");
+	}
+};
 const SET_SPOT = "spots/setSpot";
 //action
 const getSpot = (spot) => ({
@@ -117,12 +136,14 @@ export const createSpot = (spot) => async (dispatch) => {
 	return data;
 };
 
-const initialState = { spot: null };
+const initialState = { spot: null, spots: [] };
 
 function spotReducer(state = initialState, action) {
 	switch (action.type) {
 		case SET_SPOT:
 			return { ...state, spot: action.payload };
+		case GET_USER_SPOTS:
+			return { ...state, spots: action.payload };
 		default:
 			return state;
 	}

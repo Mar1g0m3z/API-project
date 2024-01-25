@@ -9,7 +9,7 @@ function SpotPages() {
 	const dispatch = useDispatch();
 
 	const spot = useSelector((state) => {
-		console.log("HERE BE STARS", state);
+		// console.log("HERE BE STARS", state);
 		return state.spots.spot;
 	});
 	useEffect(() => {
@@ -19,16 +19,16 @@ function SpotPages() {
 	return spot ? (
 		<>
 			<h1>{spot.name}</h1>
-			<div className='spot-info'>
-				<div className='large-box'>
+			<div className="spot-info">
+				<div className="large-box">
 					<img
 						src={spot.SpotImages[0]?.url}
 						alt={spot.name}
-						className='spot-image-large'
+						className="spot-image-large"
 					/>
-					<p className='spot-location'>{`${spot.city}, ${spot.state}`}</p>
-					<p className='star-rating'>
-						<i className='fas fa-star'></i>
+					<p className="spot-location">{`${spot.city}, ${spot.state}`}</p>
+					<p className="star-rating">
+						<i className="fas fa-star"></i>
 						{!spot.numReviews ? "New" : spot.avgStarRating.toFixed(1)}
 
 						{spot.numReviews === 0
@@ -40,20 +40,20 @@ function SpotPages() {
 					<p>Hosted by {spot.Owner?.firstName}</p>
 					<p>{spot.description}</p>
 					<button
-						className='Reserve'
+						className="Reserve"
 						onClick={() => alert("Feature coming soon!")}
 					>
 						Reserve
 					</button>
 				</div>
 				{spot.SpotImages.length > 1 && (
-					<ul className='image-list'>
+					<ul className="image-list">
 						{spot.SpotImages.slice(1, 5).map((image) => (
 							<li key={image.id}>
 								<img
 									src={image.url}
 									alt={spot.name}
-									className='spot-image-small'
+									className="spot-image-small"
 								/>
 							</li>
 						))}
