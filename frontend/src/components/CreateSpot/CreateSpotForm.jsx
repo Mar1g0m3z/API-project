@@ -87,10 +87,8 @@ function CreateSpotForm({ title, spot = null }) {
 							image3,
 							image4,
 							image5,
-						})
-				  ).then((spot) => {
-						navigate(`/spots/${spot.id}`);
-				  })
+						})).then((spot) => {
+						navigate(`/spots/${spot.id}`);})
 				: dispatch(
 						spotActions.updateSpot({
 							id: spot.id,
@@ -104,11 +102,9 @@ function CreateSpotForm({ title, spot = null }) {
 							name,
 							price,
 							previewImage,
-						})
-				  ).then((spot) => {
+						})).then((spot) => {
 						console.log("THIS IS UPDATE SPOT ================", spot);
-						navigate(`/spots/${spot.id}`);
-				  });
+						navigate(`/spots/${spot.id}`); });
 		}
 	};
 
