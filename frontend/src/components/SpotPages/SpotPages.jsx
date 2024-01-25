@@ -1,27 +1,20 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Reviews from "../Reviews/Reviews";
-
+import { fetchOneSpot } from "../../store/spots";
 import "./SpotPages.css";
+import { useDispatch, useSelector } from "react-redux";
 function SpotPages() {
 	const { spotId } = useParams();
-	console.log(spotId);
-	const [spot, setSpot] = useState(null);
+	const dispatch = useDispatch();
 
+	const spot = useSelector((state) => {
+		console.log("HERE BE STARS", state);
+		return state.spots.spot;
+	});
 	useEffect(() => {
-		const fetchSpots = async () => {
-			try {
-				const response = await fetch(`/api/spots/${spotId}`);
-				const data = await response.json();
-				if (data) {
-					setSpot(data);
-				}
-			} catch (error) {
-				console.error("Failed to fetch spot:", error);
-			}
-		};
-		fetchSpots();
-	}, [spotId]);
+		dispatch(fetchOneSpot(spotId));
+	}, [spotId, dispatch]);
 
 	return spot ? (
 		<>

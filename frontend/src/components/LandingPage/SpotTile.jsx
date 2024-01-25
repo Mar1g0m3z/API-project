@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 
 const SpotTile = ({ spot }) => {
-	console.log(spot.avgStars);
 	const displayRating = spot.avgStars
 		? parseFloat(spot.avgStars).toFixed(1)
 		: "New";

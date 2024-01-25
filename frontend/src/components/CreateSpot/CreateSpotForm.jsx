@@ -1,11 +1,11 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import * as spotActions from "../../store/spots";
 import "./CreateSpotForm.css";
 
 function CreateSpotForm() {
-	// const navigate = useNavigate();
+	const navigate = useNavigate();
 	const validateImgURL = function (imageUrl) {
 		if (
 			imageUrl.slice(-3) !== "png" &&
@@ -17,7 +17,7 @@ function CreateSpotForm() {
 	};
 	const dispatch = useDispatch();
 	const [country, setCountry] = useState("");
-	const [street, setStreet] = useState("");
+	const [address, setAddress] = useState("");
 	const [city, setCity] = useState("");
 	const [state, setState] = useState("");
 	const [lat, setLat] = useState("");
@@ -39,7 +39,7 @@ function CreateSpotForm() {
 		e.preventDefault();
 		const newErrors = {
 			country: country === "" ? "country is required" : undefined,
-			street: street === "" ? "street is required" : undefined,
+			address: address === "" ? "address is required" : undefined,
 			city: city === "" ? "city is required" : undefined,
 			state: state === "" ? "state is required" : undefined,
 			latitude: lat === "" ? "latitude is required" : undefined,
@@ -61,28 +61,27 @@ function CreateSpotForm() {
 		};
 
 		setErrors(newErrors);
-		if (newErrors.length === 0) {
+		if (Object.values(newErrors).every((value) => value === undefined)) {
 			return dispatch(
 				spotActions.createSpot({
 					country,
-					street,
+					address,
 					city,
+					state,
 					lat,
 					lng,
 					description,
 					name,
 					price,
 					previewImage,
+					image2,
+					image3,
+					image4,
+					image5,
 				})
-			)
-				.then()
-				.catch(async (res) => {
-					const data = await res.json();
-					if (data?.errors) {
-						setErrors(data.errors);
-					}
-					console.log(data);
-				});
+			).then((spot) => {
+				navigate(`/spots/${spot.id}`);
+			});
 		}
 	};
 	return (
@@ -107,12 +106,12 @@ function CreateSpotForm() {
 				<label htmlFor='name'>Street Address </label>
 				<input
 					type='text'
-					value={street}
-					name='street'
+					value={address}
+					name='address'
 					placeholder='Address'
-					onChange={(e) => setStreet(e.target.value)}
+					onChange={(e) => setAddress(e.target.value)}
 				></input>
-				{errors.street && <p className='error-messages'>{errors.street}</p>}
+				{errors.address && <p className='error-messages'>{errors.address}</p>}
 			</div>
 			<div className='create-form'>
 				<label htmlFor='name'>City </label>
