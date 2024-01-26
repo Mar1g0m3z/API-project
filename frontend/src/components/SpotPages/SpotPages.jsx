@@ -18,49 +18,63 @@ function SpotPages() {
 
 	return spot ? (
 		<>
-			<h1>{spot.name}</h1>
-			<div className="spot-info">
-				<div className="large-box">
-					{spot.SpotImages !== undefined ? (
-						<img
-							src={spot.SpotImages[0]?.url}
-							alt={spot.name}
-							className="spot-image-large"
-						/>
-					) : null}
-					<p className="spot-location">{`${spot.city}, ${spot.state}`}</p>
-					<p className="star-rating">
-						<i className="fas fa-star"></i>
-						{!spot.numReviews ? "New" : spot.avgStarRating.toFixed(1)}
-
-						{spot.numReviews === 0
-							? ""
-							: spot.numReviews === 1
-							? `·${spot.numReviews} Review`
-							: `·${spot.numReviews} Reviews`}
-					</p>
-					<p>Hosted by {spot.Owner?.firstName}</p>
-					<p>{spot.description}</p>
-					<button
-						className="Reserve"
-						onClick={() => alert("Feature coming soon!")}
-					>
-						Reserve
-					</button>
+			<div className="title">
+				<h1>{spot.name}</h1>
+				<div className="spot-info">
+					<h3 className="spot-location">{`${spot.city}, ${spot.state}`}</h3>
 				</div>
-				{spot.SpotImages && spot.SpotImages.length > 1 ? (
-					<ul className="image-list">
-						{spot.SpotImages.slice(1, 5).map((image) => (
-							<li key={image.id}>
-								<img
-									src={image.url}
-									alt={spot.name}
-									className="spot-image-small"
-								/>
-							</li>
-						))}
-					</ul>
-				) : null}
+				<div className="large-box">
+					<div className="large-picture">
+						{spot.SpotImages !== undefined ? (
+							<img
+								src={spot.SpotImages[0]?.url}
+								alt={spot.name}
+								className="spot-image-large"
+							/>
+						) : null}
+					</div>
+					<div className="small-pictures">
+						{spot.SpotImages && spot.SpotImages.length > 1 ? (
+							<ul className="image-list">
+								{spot.SpotImages.slice(1, 5).map((image) => (
+									<li key={image.id}>
+										<img
+											src={image.url}
+											alt={spot.name}
+											className="spot-image-small"
+										/>
+									</li>
+								))}
+							</ul>
+						) : null}
+					</div>
+					<div className="right-box">
+						<p className="star-rating">
+							<i className="fas fa-star"></i>
+							{!spot.numReviews ? "New" : spot.avgStarRating.toFixed(1)}
+
+							{spot.numReviews === 0
+								? ""
+								: spot.numReviews === 1
+								? `·${spot.numReviews} Review`
+								: `·${spot.numReviews} Reviews`}
+						</p>
+						<p className="spot-price-single">{`$${spot.price} / night`}</p>
+						<button
+							className="Reserve"
+							onClick={() => alert("Feature coming soon!")}
+						>
+							Reserve
+						</button>
+					</div>
+					<div className="host-and-desc">
+						<p>
+							Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}
+						</p>
+
+						<p>{spot.description}</p>
+					</div>
+				</div>
 			</div>
 			<Reviews spot={spot} />
 		</>
