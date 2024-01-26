@@ -15,7 +15,7 @@ function CreateSpotForm({ title, spot = null }) {
 			return "Image URL must end in .png, .jpeg, .jpg";
 		}
 	};
-	console.log("UPDATE SPOT======", spot);
+
 	const dispatch = useDispatch();
 	const [country, setCountry] = useState(spot === null ? "" : spot.country);
 	const [address, setAddress] = useState(spot === null ? "" : spot.address);
@@ -29,13 +29,16 @@ function CreateSpotForm({ title, spot = null }) {
 	const [name, setName] = useState(spot === null ? "" : spot.name);
 	const [price, setPrice] = useState(spot === null ? "" : spot.price);
 	// console.log("THIS IS UPDATE SPOT NAME, spot.name);
+	const oldPreview =  spot !== null ? spot.SpotImages.find((image) => image.preview === true) : undefined;
 	const [previewImage, setPreviewImage] = useState(
-		spot === null ? "" : spot.previewImage
-	);
-	const [image2, setImage2] = useState("");
-	const [image3, setImage3] = useState("");
-	const [image4, setImage4] = useState("");
-	const [image5, setImage5] = useState("");
+		spot === null || oldPreview === undefined ? ""  : oldPreview.url )
+		const falseImageArray = spot === null ? "" : spot.SpotImages.filter((image) => image.preview === false);
+		console.log("FALSE IMAGES ARRAY" ,falseImageArray)
+		const [image2,setImage2] = useState( spot === null || falseImageArray[0] === undefined ? '' : falseImageArray[0].url);
+	const [image3, setImage3] = useState( spot === null  || falseImageArray[1] === undefined ? "" : falseImageArray[1].url)
+	
+	const [image4, setImage4] = useState( spot === null || falseImageArray[2] === undefined ? "": falseImageArray[2].url)
+	const [image5, setImage5] = useState( spot === null  || falseImageArray[3] === undefined? "" : falseImageArray[3].url);
 	const [errors, setErrors] = useState({});
 	// const sessionUser = useSelector((state) => {
 	// 	return state.session.user;
@@ -88,22 +91,28 @@ function CreateSpotForm({ title, spot = null }) {
 							image4,
 							image5,
 						})).then((spot) => {
-						navigate(`/spots/${spot.id}`);})
+						navigate(`/spots/${spot.id}`); })
 				: dispatch(
-						spotActions.updateSpot({
-							id: spot.id,
-							country,
-							address,
-							city,
-							state,
-							lat,
-							lng,
-							description,
-							name,
-							price,
-							previewImage,
-						})).then((spot) => {
-						console.log("THIS IS UPDATE SPOT ================", spot);
+						spotActions.updateSpot(
+							{
+								id: spot.id,
+								country,
+								address,
+								city,
+								state,
+								lat,
+								lng,
+								description,
+								name,
+								price,
+								previewImage,
+								image2,
+								image3,
+								image4,
+								image5,
+							},
+							spot
+						) ).then((spot) => {
 						navigate(`/spots/${spot.id}`); });
 		}
 	};
@@ -227,60 +236,69 @@ function CreateSpotForm({ title, spot = null }) {
 				></input>
 				{errors.price && <p className="error-messages">{errors.price}</p>}
 			</div>
+
 			<h3>Liven up your spot with photos</h3>
-			<p>Submit a link at least one photo to publish your spot</p>
 			{spot === null ? (
-				<div className="spot-photos">
-					<div className="photos">
-						<input
-							type="url"
-							value={previewImage}
-							name="spot-image-1"
-							placeholder="Preview Image URL"
-							onChange={(e) => setPreviewImage(e.target.value)}
-						></input>
-						{errors.previewImage && (
-							<p className="error-messages">{errors.previewImage}</p>
-						)}
-					</div>
-					<div className="photos">
-						<input
-							type="url"
-							name="spot-image-2"
-							placeholder="Image URL"
-							onChange={(e) => setImage2(e.target.value)}
-						></input>
-						{errors.image2 && <p className="error-messages">{errors.image2}</p>}
-					</div>
-					<div className="photos">
-						<input
-							type="url"
-							name="spot-image-3"
-							placeholder="Image URL"
-							onChange={(e) => setImage3(e.target.value)}
-						></input>
-						{errors.image3 && <p className="error-messages">{errors.image3}</p>}
-					</div>
-					<div className="photos">
-						<input
-							type="url"
-							name="spot-image-4"
-							placeholder="Image URL"
-							onChange={(e) => setImage4(e.target.value)}
-						></input>
-						{errors.image4 && <p className="error-messages">{errors.image4}</p>}
-					</div>
-					<div className="photos">
-						<input
-							type="url"
-							name="spot-image-5"
-							placeholder="Image URL"
-							onChange={(e) => setImage5(e.target.value)}
-						></input>
-						{errors.image5 && <p className="error-messages">{errors.image5}</p>}
-					</div>
+				<p>Submit a link at least one photo to publish your spot</p>
+			) : (
+				<p> Have some new picture to add?</p>
+			)}
+
+			<div className="spot-photos">
+				<div className="photos">
+					<input
+						type="url"
+						value={previewImage}
+						name="spot-image-1"
+						placeholder="Preview Image URL"
+						onChange={(e) => setPreviewImage(e.target.value)}
+					></input>
+					{errors.previewImage && (
+						<p className="error-messages">{errors.previewImage}</p>
+					)}
 				</div>
-			) : null}
+				<div className="photos">
+					<input
+						type="url"
+						name="spot-image-2"
+						placeholder="Image URL"
+						value={image2}
+						onChange={(e) => setImage2(e.target.value)}
+					></input>
+					{errors.image2 && <p className="error-messages">{errors.image2}</p>}
+				</div>
+				<div className="photos">
+					<input
+						type="url"
+						name="spot-image-3"
+						placeholder="Image URL"
+						value={image3}
+						onChange={(e) => setImage3(e.target.value)}
+					></input>
+					{errors.image3 && <p className="error-messages">{errors.image3}</p>}
+				</div>
+				<div className="photos">
+					<input
+						type="url"
+						name="spot-image-4"
+						placeholder="Image URL"
+						value={image4}
+						onChange={(e) => setImage4(e.target.value)}
+					></input>
+					{errors.image4 && <p className="error-messages">{errors.image4}</p>}
+				</div>
+				<div className="photos">
+					<input
+						type="url"
+						name="spot-image-5"
+						placeholder="Image URL"
+						value={image5}
+						onChange={(e) => setImage5(e.target.value)}
+					></input>
+					{errors.image5 && <p className="error-messages">{errors.image5}</p>}
+				</div>
+			</div>
+
 			{spot === null ? (
 				<button>Create Spot</button>
 			) : (

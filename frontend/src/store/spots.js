@@ -26,9 +26,23 @@ const updateOneSpot = (spot) => ({
 	payload: spot,
 });
 
-export const updateSpot = (spot) => async (dispatch) => {
-	const { country, address, city, state, lat, lng, description, name, price } =
-		spot;
+export const updateSpot = (spot, oldSpot) => async (dispatch) => {
+	const {
+		country,
+		address,
+		city,
+		state,
+		lat,
+		lng,
+		description,
+		name,
+		price,
+		previewImage,
+		image2,
+		image3,
+		image4,
+		image5,
+	} = spot;
 	try {
 		const response = await csrfFetch(`/api/spots/${spot.id}/`, {
 			method: "PUT",
@@ -42,13 +56,44 @@ export const updateSpot = (spot) => async (dispatch) => {
 				description,
 				name,
 				price,
+				previewImage,
+				image2,
+				image3,
+				image4,
+				image5,
 			}),
 		});
 		const data = await response.json();
 		if (data) {
 			dispatch(updateOneSpot(data));
 		}
-		console.log("THIS IS THE DATA FROM UPDATE SPOT", data);
+		if (previewImage) { oldSpot.SpotImages.forEach(async(image) => {
+				
+				await csrfFetch(`/api/spot-images/${image.id}`, {
+					method: "DELETE",
+				});
+			});
+			await csrfFetch(`/api/spots/${data.id}/images`, {
+				method: "POST",
+				body: JSON.stringify({
+					url: previewImage,
+					preview: true,
+				}),
+			});
+		}
+		const images = [image2, image3, image4, image5];
+		images.forEach(async (image) => {
+			if (image) {
+				await csrfFetch(`/api/spots/${data.id}/images`, {
+					method: "POST",
+					body: JSON.stringify({
+						url: image,
+						preview: false,
+					}),
+				});
+			}
+		});
+
 		return data;
 	} catch (error) {
 		console.error("Failed up update spot", error);

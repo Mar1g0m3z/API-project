@@ -27,7 +27,9 @@ function SpotPages() {
 					<div className="large-picture">
 						{spot.SpotImages !== undefined ? (
 							<img
-								src={spot.SpotImages[0]?.url}
+								src={spot.SpotImages.find((image)=>{
+								return image.preview === true 
+								}).url}
 								alt={spot.name}
 								className="spot-image-large"
 							/>
@@ -36,14 +38,14 @@ function SpotPages() {
 					<div className="small-pictures">
 						{spot.SpotImages && spot.SpotImages.length > 1 ? (
 							<ul className="image-list">
-								{spot.SpotImages.slice(1, 5).map((image) => (
+								{spot.SpotImages.filter((image)=>image.preview === false).map((image) => (
 									<li key={image.id}>
 										<img
 											src={image.url}
 											alt={spot.name}
 											className="spot-image-small"
 										/>
-										{console.log("IMAGE ID", image.id)}
+										
 									</li>
 								))}
 							</ul>
@@ -56,7 +58,7 @@ function SpotPages() {
 
 							{spot.numReviews === 0
 								? ""
-								: spot.numReviews === 1
+								: spot.numReviews ===  1
 								? `·${spot.numReviews} Review`
 								: `·${spot.numReviews} Reviews`}
 						</p>
