@@ -80,6 +80,7 @@ function Reviews({ spot }) {
 							<p>be the first to review!</p>
 						) : (
 							reviews.map((review) => {
+								console.log("REVIEWS HERE", review);
 								return (
 									<>
 										<li key={review.id}>
@@ -90,7 +91,7 @@ function Reviews({ spot }) {
                                  ${monthNames[review.createdAtDate.getMonth()]}
                                  ${review.createdAtDate.getFullYear()}`}
 										</li>
-										{user.id === review.userId ? (
+										{user && user.id === review.userId ? (
 											<OpenModalButton
 												buttonText="Delete Review"
 												modalComponent={

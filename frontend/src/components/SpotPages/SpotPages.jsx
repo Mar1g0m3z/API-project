@@ -43,6 +43,7 @@ function SpotPages() {
 											alt={spot.name}
 											className="spot-image-small"
 										/>
+										{console.log("IMAGE ID", image.id)}
 									</li>
 								))}
 							</ul>
