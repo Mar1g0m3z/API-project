@@ -12,7 +12,7 @@ const UpdateSpot = () => {
 	useEffect(() => {
 		dispatch(fetchOneSpot(spotId));
 	}, [dispatch, spotId]);
-	console.log(spot.id, spotId);
+
 	return spot === null || spot.id.toString() !== spotId ? (
 		<h3>Loading</h3>
 	) : (
