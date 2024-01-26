@@ -55,9 +55,9 @@ const validateLat =  function(lat){ if (lat < -90 || lat> 90){
 			address: address === "" ? "address is required" : undefined,
 			city: city === "" ? "city is required" : undefined,
 			state: state === "" ? "state is required" : undefined,
-			lat: lat === "" ? "latitude is required" : validateLat(lat),
+			lat: lat === "" ? undefined : validateLat(lat),
 			
-			lng: lng === "" ? "lng is required" : validateLng(lng),
+			lng: lng === "" ? undefined : validateLng(lng),
 			name: name === "" ? "Name is required" : undefined,
 			price: price <= 0 || price === "" ? "Price is required" : undefined,
 			previewImage:
