@@ -6,8 +6,9 @@ const SpotTile = ({ spot }) => {
 		: "New";
 
 	return (
-		<NavLink to={`/spots/${spot.id}`} className='spot-link' title={spot.name}>
+		<NavLink to={`/spots/${spot.id}`} className='spot-link' >
 			<div className='spot-tile'>
+			<div className="tooltip">{spot.name}</div>
 				<img src={spot.previewImage} alt={spot.name} className='spot-image' />
 
 				<div className='spot-info'>

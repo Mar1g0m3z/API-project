@@ -1,72 +1,94 @@
 .landing-page {
-	font-family: "Montserrat", sans-serif;
-	padding: 0px;
-	margin: 0px;
+  font-family: "Montserrat", sans-serif;
+  padding: 0px;
+  margin: 0px;
 }
+
 .spots-title {
-	font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
+
 .spot-list {
-	display: grid;
-	grid-template-columns: repeat(
-		auto-fill,
-		minmax(300px, 1fr)
-	); /* Adjust as needed */
-	grid-gap: 50px; /* Adjust the gap between tiles */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-gap: 50px;
 }
 
 .spot-tile {
-	max-width: 100%;
-	height: 600px; /* Adjust this to set the fixed height for the tiles */
-	box-sizing: border-box;
+  position: relative; /* Add this for tooltip positioning */
+  max-width: 100%;
+  height: 600px;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
 
-	overflow: hidden;
+.tooltip {
+  position: relative;
+  text-align: center;
+  /* border: 1px solid black; */
+  /* border-radius: 3px; */
+  background-color: white;
+  visibility: hidden;
+  opacity: 0;
+  z-index: 1;
+  margin-bottom: 2px;
+  width: 50%;
+  transition: opacity 0.3s ease-in-out;
+}
 
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
+.spot-tile:hover .tooltip {
+  visibility: visible;
+  transform: translateX(50%);
+  transition: opacity 0.3s ease-in-out;
+  opacity: 0.5;
+  /* box-shadow: 5 2 2px rgba(0, 0, 0, 0.2); */
 }
 
 .spot-image {
-	width: 100%;
-	height: 60%;
-	object-fit: cover;
-	border-radius: 20px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-	border: 2px solid rgba(0, 0, 0, 0.1);
+  width: 100%;
+  height: 60%;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(0, 0, 0, 0.1);
 }
 
 .spot-name {
-	font-size: 1.5rem; /* Adjust font size as needed */
-	margin-bottom: 10px; /* Adjust margin as needed */
-	padding: 0px;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  padding: 0px;
 }
 
 .spot-link {
-	text-decoration: none; /* Remove underlines */
-	color: inherit; /* Inherit color from parent */
+  text-decoration: none;
+  color: inherit;
 }
+
 .display-rating,
 .spot-rating,
 .spot-price,
 .spot-location {
-	margin-top: 0; /* Adjust as needed for spacing between paragraphs */
-	padding: 0px;
+  margin-top: 0;
+  padding: 0px;
 }
+
 .spot-info {
-	display: flex;
-	justify-content: space-between;
-	width: 100%; /* Ensure the spot-info takes full width */
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
+
 .spot-rating {
-	display: flex;
-	align-items: center; /* Align items vertically */
-	margin-right: 5px;
+  display: flex;
+  align-items: center;
+  margin-right: 5px;
 }
 
 ::before {
-	margin-right: 6px;
-	position: relative;
-	/* margin-bottom: 499px; */
-	bottom: 1px;
+  margin-right: 6px;
+  position: relative;
+  bottom: 1px;
 }
