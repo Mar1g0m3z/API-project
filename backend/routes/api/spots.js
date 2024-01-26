@@ -267,11 +267,13 @@ router.get("/:spotId", async (req, res) => {
 
 		res.status(200).json(spotDetails);
 	} catch (error) {
+		
 		res.status(500).json({ message: "Internal server error" });
 	}
 });
 
 const validateSpot = async (req, res) => {
+	
 	try {
 		const {
 			address,
@@ -298,13 +300,13 @@ const validateSpot = async (req, res) => {
 		if (!country) {
 			errors.country = "Country is required";
 		}
-		if (lat < -90 || lat > 90) {
+		if ( lat < -90 || lat > 90) {
 			errors.lat = "Latitude must be within -90 and 90";
 		}
 		if (lng < -180 || lng > 180) {
 			errors.lng = "Longitude must be within -180 and 180";
 		}
-		if (name.length >= 50) {
+		if(name === undefined){errors.name = "Please enter a name"} else if (name.length >= 50) {
 			errors.name = "Name must be less than 50 characters";
 		}
 		if (!description) {
@@ -313,13 +315,13 @@ const validateSpot = async (req, res) => {
 		if (price < 0) {
 			errors.price = "Price per day must be a positive number";
 		}
-
 		if (Object.keys(errors).length > 0) {
 			return res.status(400).json({ message: "Bad Request", errors });
 		}
-
+		
 		return true;
 	} catch (error) {
+		console.log(error)
 		return res.status(500).json({ message: "Internal server error" });
 	}
 };
@@ -444,7 +446,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
 
 router.post("/", requireAuth, async (req, res) => {
 	const validation = await validateSpot(req, res);
-	if (validation !== true) return;
+	if (validation !== true) return validation;
 
 	try {
 		const userId = req.user.id;
@@ -461,6 +463,7 @@ router.post("/", requireAuth, async (req, res) => {
 			price,
 		} = req.body;
 
+		
 		const newSpot = await Spot.create(
 			{
 				address,
@@ -657,9 +660,9 @@ router.put("/:spotId", requireAuth, async (req, res) => {
 	if (!city) errors.city = "City is required";
 	if (!state) errors.state = "State is required";
 	if (!country) errors.country = "Country is required";
-	if (!lat || lat < -90 || lat > 90)
+	if ( lat < -90 || lat > 90)
 		errors.lat = "Latitude must be within -90 and 90";
-	if (!lng || lng < -180 || lng > 180)
+	if (lng < -180 || lng > 180)
 		errors.lng = "Longitude must be within -180 and 180";
 	if (!name) errors.name = "Name is required";
 	else if (name.length >= 50)
@@ -676,8 +679,8 @@ router.put("/:spotId", requireAuth, async (req, res) => {
 	spot.city = city || spot.city;
 	spot.state = state || spot.state;
 	spot.country = country || spot.country;
-	spot.lat = lat || spot.lat;
-	spot.lng = lng || spot.lng;
+	spot.lat = lat || "";
+	spot.lng = lng || "";
 	spot.name = name || spot.name;
 	spot.description = description || spot.description;
 	spot.price = price || spot.price;
