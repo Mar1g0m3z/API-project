@@ -15,7 +15,12 @@ function CreateSpotForm({ title, spot = null }) {
 			return "Image URL must end in .png, .jpeg, .jpg";
 		}
 	};
-
+const validateLng =  function(lng){ if (lng < -180 || lng > 180){
+	return "lng needs to be between -180 and 180"
+} else return undefined}
+const validateLat =  function(lat){ if (lat < -90 || lat> 90){
+	return "lat needs to be between -90 and 90"
+} else return undefined}
 	const dispatch = useDispatch();
 	const [country, setCountry] = useState(spot === null ? "" : spot.country);
 	const [address, setAddress] = useState(spot === null ? "" : spot.address);
@@ -28,12 +33,11 @@ function CreateSpotForm({ title, spot = null }) {
 	);
 	const [name, setName] = useState(spot === null ? "" : spot.name);
 	const [price, setPrice] = useState(spot === null ? "" : spot.price);
-	// console.log("THIS IS UPDATE SPOT NAME, spot.name);
 	const oldPreview =  spot !== null ? spot.SpotImages.find((image) => image.preview === true) : undefined;
 	const [previewImage, setPreviewImage] = useState(
 		spot === null || oldPreview === undefined ? ""  : oldPreview.url )
 		const falseImageArray = spot === null ? "" : spot.SpotImages.filter((image) => image.preview === false);
-		console.log("FALSE IMAGES ARRAY" ,falseImageArray)
+		
 		const [image2,setImage2] = useState( spot === null || falseImageArray[0] === undefined ? '' : falseImageArray[0].url);
 	const [image3, setImage3] = useState( spot === null  || falseImageArray[1] === undefined ? "" : falseImageArray[1].url)
 	
@@ -51,8 +55,9 @@ function CreateSpotForm({ title, spot = null }) {
 			address: address === "" ? "address is required" : undefined,
 			city: city === "" ? "city is required" : undefined,
 			state: state === "" ? "state is required" : undefined,
-			latitude: lat === "" ? "latitude is required" : undefined,
-			lng: lng === "" ? "lng is required" : undefined,
+			lat: lat === "" ? "latitude is required" : validateLat(lat),
+			
+			lng: lng === "" ? "lng is required" : validateLng(lng),
 			name: name === "" ? "Name is required" : undefined,
 			price: price <= 0 || price === "" ? "Price is required" : undefined,
 			previewImage:
@@ -171,7 +176,7 @@ function CreateSpotForm({ title, spot = null }) {
 			<div className="create-form">
 				<label htmlFor="name">lat </label>
 				<input
-					type="text"
+					type="number"
 					value={lat}
 					name="lat"
 					placeholder="lat"
@@ -182,7 +187,7 @@ function CreateSpotForm({ title, spot = null }) {
 			<div className="create-form">
 				<label htmlFor="name">lng </label>
 				<input
-					type="text"
+					type="number"
 					value={lng}
 					name="lng"
 					placeholder="lng"
