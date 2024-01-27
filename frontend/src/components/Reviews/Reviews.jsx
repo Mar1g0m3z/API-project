@@ -95,7 +95,7 @@ function Reviews({ spot }) {
 											<OpenModalButton
 												buttonText="Delete Review"
 												modalComponent={
-													<DeleteReviewModal reviewId={review.id} />
+													<DeleteReviewModal reviewId={review.id}  spotId={spot.id}/>
 												}
 											/>
 										) : null}

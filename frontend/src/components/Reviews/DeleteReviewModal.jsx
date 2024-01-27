@@ -2,12 +2,12 @@ import { useModal } from "../../context/Modal";
 import { deleteUserReview } from "../../store/review";
 import { useDispatch } from "react-redux";
 
-function DeleteReviewModal({ reviewId }) {
+function DeleteReviewModal({ reviewId,spotId }) {
 	const dispatch = useDispatch();
 	const { closeModal } = useModal();
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		return dispatch(deleteUserReview(reviewId)).then(closeModal);
+		return dispatch(deleteUserReview(reviewId,spotId)).then(closeModal);
 	};
 	return (
 		<>

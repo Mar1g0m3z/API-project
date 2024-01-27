@@ -8,7 +8,7 @@ const deleteReview = (reviewId) => ({
 	reviewId: reviewId,
 });
 
-export const deleteUserReview = (reviewId) => async (dispatch) => {
+export const deleteUserReview = (reviewId,spotId) => async (dispatch) => {
 	console.log(reviewId);
 	try {
 		const response = await csrfFetch(`/api/reviews/${reviewId}`, {
@@ -17,6 +17,8 @@ export const deleteUserReview = (reviewId) => async (dispatch) => {
 		const data = await response.json();
 		if (data) {
 			dispatch(deleteReview(reviewId));
+			dispatch(fetchOneSpot(spotId))
+			
 		}
 	} catch (error) {
 		console.error("Failed to fetch reviews:", error);

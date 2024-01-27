@@ -25,7 +25,7 @@ function SpotPages() {
 				</div>
 				<div className="large-box">
 					<div className="large-picture">
-						{spot.SpotImages !== undefined ? (
+						{spot.SpotImages !== undefined  && spot.SpotImages.length >= 1 ? (
 							<img
 								src={spot.SpotImages.find((image)=>{
 								return image.preview === true 
