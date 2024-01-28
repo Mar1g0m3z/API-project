@@ -10,7 +10,7 @@
   text-align: center;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center align the child elements */
+  align-items: center;
 }
 
 .create-review h2 {
@@ -20,7 +20,6 @@
   font-family: "Montserrat", sans-serif;
 }
 
-/* Style for the star rating */
 .create-review i {
   color: #ffc107;
   cursor: pointer;
@@ -32,26 +31,24 @@
   color: #e6b800;
 }
 
-/* Style for the review textarea */
 .create-review textarea {
-  width: calc(100% - 20px); /* Full width minus padding */
-  height: 100px; /* Adjustable height */
+  width: calc(100% - 20px);
+  height: 100px;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-family: "Montserrat", sans-serif;
-  resize: vertical; /* Allow vertical resizing */
-  align-self: center; /* Center align the textarea */
+  resize: vertical;
+  align-self: center;
 }
-/* Error message styling */
+
 .create-review .error {
   color: red;
   font-size: 0.9rem;
   margin: 5px 0;
 }
 
-/* Submit button styling */
 .submit-review-button {
   background-color: #4caf50;
   color: white;
@@ -60,7 +57,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
-  width: 100%; /* Full width of the container */
+  width: 100%;
   margin-top: 10px;
 }
 
@@ -92,45 +89,43 @@ ul.review-list button:hover {
 
 .delete-review-modal {
   font-family: "Montserrat", sans-serif;
-  background-color: #fff; /* White background */
+  background-color: #fff;
   padding: 20px;
-  border-radius: 10px; /* Rounded corners */
+  border-radius: 10px;
 
-  text-align: center; /* Center align the text */
-  max-width: 400px; /* Restrict the width */
-  margin: auto; /* Center the modal */
+  text-align: center;
+  max-width: 400px;
+  margin: auto;
 }
 
 .delete-review-modal h3 {
-  color: #e51e53; /* Red color for attention */
-  margin-bottom: 15px; /* Space below the heading */
+  color: #e51e53;
+  margin-bottom: 15px;
 }
 
 .delete-review-modal p {
-  margin-bottom: 20px; /* Space above the buttons */
-  color: #333; /* Dark text for readability */
+  margin-bottom: 20px;
+  color: #333;
 }
 
-/* Styling for 'Yes' (delete) button */
 .delete-review-modal .yes-delete {
-  background-color: #e51e53; /* Red background */
-  color: white; /* White text */
-  padding: 10px 20px; /* Padding around the text */
-  border: none; /* No border */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Hand icon on hover */
-  margin-right: 10px; /* Space between buttons */
-  transition: background-color 0.2s; /* Smooth transition on hover */
+  background-color: #e51e53;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+  transition: background-color 0.2s;
 }
 
 .delete-review-modal .yes-delete:hover {
-  background-color: #c41447; /* Darker red on hover */
+  background-color: #c41447;
 }
 
-/* Styling for 'No' (keep) button */
 .delete-review-modal button {
-  background-color: #4caf50; /* Green background */
-  color: white; /* White text */
+  background-color: #4caf50;
+  color: white;
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -139,21 +134,21 @@ ul.review-list button:hover {
 }
 
 .delete-review-modal button:hover {
-  background-color: #43a047; /* Darker green on hover */
+  background-color: #43a047;
 }
 
 .reviews button {
-  background-color: #4caf50; /* Green background for a friendly action */
-  color: white; /* White text for readability */
-  padding: 10px 20px; /* Comfortable padding */
-  border: none; /* No border for a cleaner look */
-  border-radius: 5px; /* Rounded corners */
-  cursor: pointer; /* Hand icon to indicate it's clickable */
-  font-size: 16px; /* Readable font size */
-  margin: 10px 0; /* Margin for spacing */
-  transition: background-color 0.3s; /* Smooth transition for hover effect */
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 10px 0;
+  transition: background-color 0.3s;
 }
 
 .reviews button:hover {
-  background-color: #43a047; /* Slightly darker green on hover */
+  background-color: #43a047;
 }

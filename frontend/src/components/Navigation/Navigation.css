@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
-/* Reset margin and padding for ul and li to prevent default browser styles */
 ul,
 li {
   margin: 0;
@@ -8,16 +7,14 @@ li {
   list-style-type: none;
 }
 
-/* Header container styles */
 .header-ul {
   display: flex;
-  justify-content: space-around; /* Aligns children to the space between */
-  align-items: center; /* Vertically center align children */
-  position: relative; /* Needed for absolute positioning of children */
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
   border-bottom: solid black;
 }
 
-/* Logo styles */
 .logo {
   width: 105px;
   height: 105px;
@@ -29,8 +26,8 @@ li {
 }
 
 .profile-button {
-  background-color: #0976c1; /* Blue background */
-  color: white; /* White text for contrast */
+  background-color: #0976c1;
+  color: white;
   width: 80px;
   height: 40px;
   margin-right: 50px;
@@ -48,18 +45,17 @@ li {
 .profile-button:hover {
   background: linear-gradient(45deg, #0976c1, #e3f558);
 }
-/* Profile Button Container */
+
 li.profile-button-container {
   display: flex;
-  align-items: center; /* This will vertically center the content of li */
-  justify-content: flex-start; /* Aligns content to the start of the li */
+  align-items: center;
+  justify-content: flex-start;
 }
 
 .hidden {
   display: none;
 }
 
-/* App Name Styles */
 h1.app-name {
   margin-right: 50px;
   font-size: 50px;
@@ -70,11 +66,10 @@ h1.app-name {
   font-family: "Press Start 2P", cursive;
   white-space: nowrap;
   animation: bounce 1s ease-in-out 1;
-  flex-grow: 1; /* Allow the app name to fill the available space */
-  text-align: center; /* Center the text */
+  flex-grow: 1;
+  text-align: center;
 }
 
-/* Bounce Animation */
 @keyframes bounce {
   50% {
     transform: translateY(-10px);
@@ -84,7 +79,6 @@ h1.app-name {
   }
 }
 
-/* Login/Sign Up List Item */
 li.log-in-sign-up {
   cursor: pointer;
 }
@@ -93,7 +87,6 @@ li.log-in-sign-up:hover {
   font-weight: bolder;
 }
 
-/* Additional Container Styles */
 li.name-container {
   display: flex;
   justify-content: center;
@@ -103,18 +96,17 @@ li.name-container {
 /* Media Queries */
 @media (max-width: 868px) {
   h1.app-name {
-    font-size: 20px; /* Smaller font size for smaller screens */
+    font-size: 20px;
   }
 
   .header-ul {
-    padding: 0 5px; /* Reduce padding on smaller screens */
+    padding: 0 5px;
   }
 
-  /* Adjust logo and button size on smaller screens */
   .logo,
   .profile-button {
-    width: 60px; /* Smaller width */
-    height: 60px; /* Smaller height */
+    width: 60px;
+    height: 60px;
     padding: 10px;
   }
 }
@@ -129,7 +121,7 @@ h1.app-name {
   white-space: nowrap;
   text-align: center;
   position: relative;
-  overflow: hidden; /* Ensures the shine effect is contained within the text */
+  overflow: hidden;
   animation: bounce 1s ease-in-out;
 }
 
@@ -146,7 +138,7 @@ h1.app-name::after {
     rgba(255, 255, 255, 0.8),
     transparent
   );
-  animation: shine 2s 1s ease-in-out forwards; /* Starts after 1 second, lasts for 2 seconds */
+  animation: shine 2s 1s ease-in-out forwards;
 }
 
 @keyframes bounce {
@@ -163,7 +155,7 @@ h1.app-name::after {
     left: 100%;
   }
 }
-/* Login/Sign Up List Item */
+
 li.log-in-sign-up {
   cursor: pointer;
 }
@@ -172,7 +164,6 @@ li.log-in-sign-up:hover {
   font-weight: bolder;
 }
 
-/* Additional Container Styles */
 li.name-container {
   display: flex;
   justify-content: center;
@@ -182,44 +173,43 @@ li.name-container {
 /* Media Queries */
 @media (max-width: 968px) {
   h1.app-name {
-    font-size: 20px; /* Smaller font size for smaller screens */
+    font-size: 20px;
   }
 
   .header-ul {
-    padding: 0 5px; /* Reduce padding on smaller screens */
+    padding: 0 5px;
   }
 
-  /* Adjust logo and button size on smaller screens */
   .logo,
   .profile-button {
-    width: 60px; /* Smaller width */
-    height: 60px; /* Smaller height */
+    width: 60px;
+    height: 60px;
     padding: 10px;
     margin: 10px;
   }
 }
 .create-spot {
-  list-style: none; /* Remove default list styling */
-  margin: 10px; /* Add some margin around the list item */
-  text-align: center; /* Center align the li content */
+  list-style: none;
+  margin: 10px;
+  text-align: center;
 }
 
 .create-spot a {
-  text-decoration: none; /* Remove underline from links */
+  text-decoration: none;
   font-family: "Press Start 2P", cursive;
-  font-size: 0.8rem; /* Smaller font size */
-  color: #ffffff; /* Set text color to white */
-  background-color: #007bff; /* Set background color to a bright blue */
-  padding: 8px 12px; /* Reduced padding for a smaller button */
-  border: 1px solid #007bff; /* Border color same as background */
-  border-radius: 5px; /* Rounded corners */
-  display: inline-block; /* Allows setting dimensions */
-  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover effect */
-  text-align: center; /* Center text horizontally */
-  line-height: normal; /* Adjust line height for vertical centering */
+  font-size: 0.8rem;
+  color: #ffffff;
+  background-color: #007bff;
+  padding: 8px 12px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  display: inline-block;
+  transition: background-color 0.3s, color 0.3s;
+  text-align: center;
+  line-height: normal;
 }
 
 .create-spot a:hover {
-  background-color: #0056b3; /* Darker shade of blue on hover */
-  color: #e2e6ea; /* Light gray color for text on hover */
+  background-color: #0056b3;
+  color: #e2e6ea;
 }

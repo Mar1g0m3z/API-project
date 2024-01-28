@@ -10,7 +10,7 @@
 
 .create-spot-form h2,
 .create-spot-form h3 {
-  color: #0976c1; /* Title color */
+  color: #0976c1;
   margin-bottom: 10px;
 }
 
@@ -51,7 +51,7 @@
 }
 
 .create-spot-form .error-messages {
-  color: #e51e53; /* Error message color */
+  color: #e51e53;
   font-size: 0.8rem;
   margin-top: 5px;
 }

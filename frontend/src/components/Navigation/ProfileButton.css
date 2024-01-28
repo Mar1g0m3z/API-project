@@ -2,63 +2,60 @@ ul.profile-dropdown {
   font-family: "Montserrat", sans-serif;
   z-index: 2;
   width: fit-content;
-  position: absolute; /* Position relative to the parent button */
-  background-color: #ffffff; /* White background */
-  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2); /* Shadow for depth */
-  border-radius: 5px; /* Rounded corners */
-  padding: 12px 16px; /* Padding inside the dropdown */
-  right: 55px; /* Align to the right of the button */
-  top: 90px; /* Position below the button */
-  list-style: none; /* Remove default list styling */
+  position: absolute;
+  background-color: #ffffff;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  padding: 12px 16px;
+  right: 55px;
+  top: 90px;
+  list-style: none;
 }
 
 ul.profile-dropdown li {
-  padding: 8px 12px; /* Padding for each list item */
-  cursor: pointer; /* Change cursor to pointer to indicate clickable items */
-  transition: background-color 0.2s; /* Smooth transition for hover effect */
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 ul.profile-dropdown li:hover {
-  background-color: #f5f5f5; /* Light grey background on hover for feedback */
+  background-color: #f5f5f5;
 }
 
 ul.profile-dropdown li:not(:last-child) {
-  border-bottom: 1px solid #ddd; /* Separator between items */
+  border-bottom: 1px solid #ddd;
 }
 
-/* User name and email styling */
 li.user-name,
 li.user-email {
-  color: #333; /* Text color */
-  padding: 8px 0; /* Padding for each item */
-  border-bottom: 1px solid #e0e0e0; /* Separator between items */
+  color: #333;
+  padding: 8px 0;
+  border-bottom: 1px solid #e0e0e0;
 }
 
-/* Manage spots link styling */
 a.manage-spots {
-  display: block; /* Make the link take the entire line */
-  color: #008cba; /* Link color */
-  padding: 8px 0; /* Padding */
-  text-decoration: none; /* Remove underline */
+  display: block;
+  color: #008cba;
+  padding: 8px 0;
+  text-decoration: none;
 }
 
 a.manage-spots:hover {
-  color: #005f6b; /* Color change on hover */
+  color: #005f6b;
 }
 
-/* Log out button styling */
 .log-out-button {
   background-color: #e51e53; /* Red background */
-  color: white; /* White text */
-  padding: 8px 16px; /* Padding */
-  border-radius: 4px; /* Rounded corners */
-  border: none; /* Remove border */
-  width: 100%; /* Full width of the dropdown */
-  text-align: center; /* Center the text */
-  cursor: pointer; /* Pointer/hand icon when mouse over the button */
-  text-decoration: none; /* Remove underline */
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  border: none;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .log-out-button:hover {
-  background-color: #c41447; /* Darker shade on hover */
+  background-color: #c41447;
 }
