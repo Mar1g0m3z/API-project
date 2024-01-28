@@ -23,10 +23,10 @@
 }
 
 /* Styles for each spot tile */
-.spot-tile {
+.landing-page .spot-tile {
   position: relative;
   max-width: 100%;
-  height: 600px; /* Fixed height for larger screens */
+  height: 400px; /* Fixed height for larger screens */
   box-sizing: border-box;
   overflow: hidden;
   display: flex;

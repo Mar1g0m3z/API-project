@@ -18,9 +18,11 @@ function Navigation({ isLoaded }) {
 				<li className="name-container">
 					<h1 className="app-name"> LevelUp Lodgings </h1>
 				</li>
+				{sessionUser && (
 				<li className="create-spot">
 					<CreateSpot />
 				</li>
+				)}
 				{isLoaded && (
 					<li className="profile-button-container">
 						<ProfileButton user={sessionUser} />

@@ -9,6 +9,7 @@
   height: 100%;
 }
 .user-spots h1 {
+  font-family: "Montserrat", sans-serif;
   font-size: 2rem;
   margin-bottom: 30px;
   display: flex;
