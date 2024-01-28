@@ -33,6 +33,48 @@ module.exports = {
 					firstName: "Dragon",
 					lastName: "Born",
 				},
+				{
+					email: "masterchief@unsc.com",
+					username: "MasterChief",
+					hashedPassword: bcrypt.hashSync("Cortana117"),
+					firstName: "John",
+					lastName: "117",
+				},
+				{
+					email: "lara@croftmanor.com",
+					username: "LaraCroft",
+					hashedPassword: bcrypt.hashSync("TombRaider"),
+					firstName: "Lara",
+					lastName: "Croft",
+				},
+				{
+					email: "sonic@sega.com",
+					username: "SonicTheHedgehog",
+					hashedPassword: bcrypt.hashSync("GottaGoFast"),
+					firstName: "Sonic",
+					lastName: "Hedgehog",
+				},
+				{
+					email: "kratos@olympus.com",
+					username: "GhostOfSparta",
+					hashedPassword: bcrypt.hashSync("BladesOfChaos"),
+					firstName: "Kratos",
+					lastName: "God",
+				},
+				{
+					email: "samus@chozo.com",
+					username: "SamusAran",
+					hashedPassword: bcrypt.hashSync("MetroidHunter"),
+					firstName: "Samus",
+					lastName: "Aran",
+				},
+				{
+					email: "link@hyrule.com",
+					username: "HeroOfTime",
+					hashedPassword: bcrypt.hashSync("Epona123"),
+					firstName: "Link",
+					lastName: "Hero",
+				},
 			],
 			{ validate: true }
 		);

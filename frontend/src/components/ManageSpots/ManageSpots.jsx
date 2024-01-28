@@ -5,6 +5,7 @@ import SpotTile from "../LandingPage/SpotTile";
 import { NavLink, useNavigate } from "react-router-dom";
 import OpenModalButton from "../OpenModalButton";
 import DeleteSpotModal from "../ManageSpots/DeleteSpotModal";
+import "./ManageSpots.css"
 function ManageSpots() {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -15,8 +16,9 @@ function ManageSpots() {
 	useEffect(() => {
 		dispatch(getUserSpots());
 	}, [dispatch]);
-	console.log("MANAGE SPOTS SPOTS", spots);
+	
 	return (
+		<div className="large-boxes">
 		<div className="user-spots">
 			<h1>Manage Spots</h1>
 			{spots.length >= 1 ? (
@@ -24,7 +26,8 @@ function ManageSpots() {
 					{spots.map((spot) => (
 						<>
 							<SpotTile key={spot.id} spot={spot} />
-							<button
+							<div className="button-list">
+							<button className="update"
 								onClick={() => {
 									navigate(`/spots/${spot.id}/edit`);
 								}}
@@ -35,12 +38,14 @@ function ManageSpots() {
 								buttonText="Delete"
 								modalComponent={<DeleteSpotModal spotId={spot.id} />}
 							></OpenModalButton>
+							</div>
 						</>
 					))}
 				</div>
 			) : (
-				<NavLink to="/spots/new">Create New Spot</NavLink>
+				<NavLink className="create-spot"to="/spots/new">Create New Spot</NavLink>
 			)}
+			</div>
 		</div>
 	);
 }

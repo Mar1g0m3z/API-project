@@ -15,11 +15,14 @@ function Navigation({ isLoaded }) {
 						<img className='logo' src='/logo-for-project.png' />
 					</NavLink>
 				</li>
-				<li>
+				<li className="name-container">
+					<h1 className="app-name"> LevelUp Lodgings </h1>
+				</li>
+				<li className="create-spot">
 					<CreateSpot />
 				</li>
 				{isLoaded && (
-					<li>
+					<li className="profile-button-container">
 						<ProfileButton user={sessionUser} />
 					</li>
 				)}

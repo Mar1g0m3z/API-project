@@ -5,6 +5,7 @@ import OpenModalButton from "../OpenModalButton";
 import CreateReviewModal from "./CreateReviewModal";
 import { getReviews } from "../../store/review";
 import DeleteReviewModal from "./DeleteReviewModal";
+import "./Reviews.css"
 
 function Reviews({ spot }) {
 	const dispatch = useDispatch();
@@ -64,6 +65,16 @@ function Reviews({ spot }) {
 			{reviews !== null ? (
 				<div className="reviews">
 					<h3>Reviews</h3>
+					<p className="star-rating">
+							<i className="fas fa-star"></i>
+							{!spot.numReviews ? "New" : spot.avgStarRating.toFixed(1)}
+
+							{spot.numReviews === 0
+								? ""
+								: spot.numReviews ===  1
+								? `·${spot.numReviews} Review`
+								: `·${spot.numReviews} Reviews`}
+						</p>
 					{user &&
 					reviews.every((review) => review.userId !== user.id) &&
 					user.id !== spot.ownerId ? (
@@ -80,10 +91,10 @@ function Reviews({ spot }) {
 							<p>be the first to review!</p>
 						) : (
 							reviews.map((review) => {
-								console.log("REVIEWS HERE", review);
+							
 								return (
 									<>
-										<li key={review.id}>
+										<li  key={review.id}>
 											{`${review.User.firstName}
 								${review.User.lastName}:
 								 ${review.review}
@@ -94,6 +105,7 @@ function Reviews({ spot }) {
 										{user && user.id === review.userId ? (
 											<OpenModalButton
 												buttonText="Delete Review"
+												
 												modalComponent={
 													<DeleteReviewModal reviewId={review.id}  spotId={spot.id}/>
 												}

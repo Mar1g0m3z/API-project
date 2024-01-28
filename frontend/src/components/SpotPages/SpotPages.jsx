@@ -17,12 +17,16 @@ function SpotPages() {
 	}, [spotId, dispatch]);
 
 	return spot ? (
-		<>
-			<div className="title">
+		<div className="spot-body">
+			
 				<h1>{spot.name}</h1>
+				
 				<div className="spot-info">
 					<h3 className="spot-location">{`${spot.city}, ${spot.state}`}</h3>
 				</div>
+
+	
+			
 				<div className="large-box">
 					<div className="large-picture">
 						{spot.SpotImages !== undefined  && spot.SpotImages.length >= 1 ? (
@@ -51,7 +55,17 @@ function SpotPages() {
 							</ul>
 						) : null}
 					</div>
+					</div>
+					<div className="positioner">
+					<div className="host-and-desc">
+						<h3>
+							Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}
+						</h3>
+
+						<p>{spot.description}</p>
+					</div>
 					<div className="right-box">
+					<div className="rating-price">
 						<p className="star-rating">
 							<i className="fas fa-star"></i>
 							{!spot.numReviews ? "New" : spot.avgStarRating.toFixed(1)}
@@ -63,24 +77,19 @@ function SpotPages() {
 								: `·${spot.numReviews} Reviews`}
 						</p>
 						<p className="spot-price-single">{`$${spot.price} / night`}</p>
+						</div>
 						<button
-							className="Reserve"
+							className="reserve"
 							onClick={() => alert("Feature coming soon!")}
 						>
 							Reserve
 						</button>
 					</div>
-					<div className="host-and-desc">
-						<p>
-							Hosted by {spot.Owner?.firstName} {spot.Owner?.lastName}
-						</p>
-
-						<p>{spot.description}</p>
 					</div>
-				</div>
-			</div>
+				
+			
 			<Reviews spot={spot} />
-		</>
+		</div>
 	) : (
 		<div>Loading</div>
 	);

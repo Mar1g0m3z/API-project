@@ -1,75 +1,120 @@
-/* Add styles for the container of small images */
-div#root {
-	margin: 100px;
-	font-family: "Montserrat", sans-serif;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
+.spot-body {
+  margin: 100px;
+  font-family: "Montserrat", sans-serif;
 }
-.spot-info {
-	display: flex;
-	width: 100%;
-	margin: auto;
-	box-sizing: content-box;
 
-	justify-content: center;
+.spot-info {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  box-sizing: border-box;
+}
+.right-box {
+  border: solid;
+  position: relative;
+
+  display: flex;
+
+  border: 1px solid #ddd; /* Subtle border */
+  position: relative;
+  width: 300px;
+  display: flex;
+  padding-left: 50px;
+  flex-direction: column;
+  padding: 20px; /* Inner spacing */
+  background-color: #fff; /* White background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+  max-width: 400px; /* Maximum width */
+  margin: 20px; /* Margin around the box */
+  font-family: "Montserrat", sans-serif; /* Consistent font */
+}
+.rating-price {
+  display: flex;
+  justify-content: space-between;
 }
 h1 {
-	font-family: "Montserrat", sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
-.image-list {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr);
-	grid-gap: 5px;
-	padding-left: 15px;
-	/* padding: 10px; */
-	height: fit-content;
-	/* object-fit: contain; */
+.positioner {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: solid;
 }
 
-/* Add styles for each small image */
-.spot-image-small {
-	width: 400px; /* Adjust the width as needed */
-	height: 465px; /* Adjust the initial height as needed */
-	object-fit: cover;
-	border-radius: 20px;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-	border: 2px solid rgba(0, 0, 0, 0.1);
+.reserve {
+  background-color: #008cba; /* Eye-catching blue background */
+  color: white; /* White text for contrast */
+  padding: 12px 24px; /* Comfortable padding */
+  font-size: 16px; /* Readable font size */
+  border: none; /* No border for a modern look */
+  border-radius: 5px; /* Slightly rounded corners */
+  cursor: pointer; /* Cursor changes to a hand icon to indicate it's clickable */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover effects */
+  text-align: center; /* Center the text */
+  text-decoration: none; /* Remove any text decoration */
+  display: inline-block; /* Allows setting dimensions */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
 }
+.reserve:hover {
+  background-color: #0073a1; /* Slightly darker shade on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+}
+
+.reserve:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.5); /* Add a focus indicator */
+}
+
+/* Container for both large and small images */
 .large-box {
-	margin-top: 15px;
+  display: flex;
+  flex-direction: row; /* Horizontal layout */
+  align-items: flex-start; /* Align items to the start (top) */
+  gap: 20px;
 }
-/* Add styles for the large image */
+
+/* Large image styling */
 .spot-image-large {
-	border-radius: 20px;
-	box-sizing: content-box;
-	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-	border: 2px solid rgba(0, 0, 0, 0.1);
-	width: 100%;
-	/* height: 94%; */
+  box-sizing: border-box;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  width: 800px;
+  object-fit: cover; /* Ensure proper aspect ratio */
 }
 
-/* Add styles for the overall layout */
-/* .large-box {
-	margin-top: 15px;
-	margin-bottom: 8px;
+/* Small images container */
+.image-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns grid */
+  grid-gap: 5px;
+  width: 500px; /* 40% of parent container width */
+}
 
-} */
+/* Small image styling */
+.spot-image-small {
+  width: 100%; /* Full width of the column */
+  height: 210px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border: 2px solid rgba(0, 0, 0, 0.1);
+}
 
-/* Media queries for responsive design */
+/* Responsive adjustments */
 @media (max-width: 768px) {
-	.image-list {
-		display: none; /* Hide the small images on smaller screens */
-	}
-}
+  .large-box {
+    flex-direction: column; /* Stack vertically on smaller screens */
+  }
 
-@media (min-width: 769px) {
-	.image-list {
-		display: grid;
-	}
+  .spot-image-large,
+  .image-list {
+    width: 100%; /* Full width for smaller screens */
+  }
 
-	.spot-info {
-		margin: 0 auto; /* Center the spot info horizontally */
-	}
+  .image-list {
+    display: none; /* Hide the small images on smaller screens */
+  }
 }

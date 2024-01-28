@@ -1,0 +1,51 @@
+form.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+
+.submit {
+  background-color: #4caf50; /* Green background */
+  color: white; /* White text */
+  padding: 15px 32px; /* Top and bottom padding, Left and right padding */
+  text-align: center; /* Center the text inside */
+  text-decoration: none; /* Remove underline from links */
+  display: inline-block; /* Allow setting width and height */
+  font-size: 16px; /* Text size */
+  margin: 4px 2px; /* Margin around the button */
+  cursor: pointer; /* Pointer/hand icon when mouse over the button */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  transition: background-color 0.3s ease; /* Smooth background color change */
+}
+.submit:disabled {
+  background-color: #cccccc; /* Gray background */
+  color: #666666; /* Dark gray text */
+  cursor: default; /* Default cursor */
+  border: 1px solid #999999; /* Optional: add a border */
+  box-shadow: none; /* Remove any shadow if exists */
+  opacity: 0.7; /* Slightly transparent */
+}
+
+.demo-user {
+  background-color: #008cba; /* Blue background */
+  color: white; /* White text */
+  padding: 12px 24px; /* Padding */
+  text-align: center; /* Center the text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Allow setting width and height */
+  font-size: 14px; /* Font size */
+  margin: 4px 2px; /* Margin */
+  cursor: pointer; /* Pointer/hand icon when mouse over the button */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Rounded corners */
+  transition: background-color 0.3s, transform 0.3s; /* Smooth transition for hover effects */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+.demo-user:hover {
+  background-color: #0073a1; /* Slightly darker blue on hover */
+  transform: scale(1.05); /* Slightly enlarge the button */
+}

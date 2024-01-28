@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useState } from "react";
 import * as reviewActions from "../../store/review";
-
+import "./Reviews.css"
 function CreateReviewModal({ spot }) {
 	const dispatch = useDispatch();
 	const [review, setReview] = useState("");
@@ -33,6 +33,7 @@ function CreateReviewModal({ spot }) {
 
 	return (
 		<>
+		<div className="create-review">
 			<h2>How was your stay?</h2>
 			{errors?.review}
 			{errors?.stars}
@@ -61,6 +62,7 @@ function CreateReviewModal({ spot }) {
 					</button>
 				}
 			</form>
+		</div>
 		</>
 	);
 }

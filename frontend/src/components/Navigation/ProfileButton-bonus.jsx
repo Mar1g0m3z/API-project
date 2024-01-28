@@ -6,7 +6,7 @@ import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { useNavigate } from "react-router-dom";
-
+import "./ProfileButton.css"
 function ProfileButton({ user }) {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
@@ -51,13 +51,13 @@ function ProfileButton({ user }) {
 			<ul className={ulClassName} ref={ulRef}>
 				{user ? (
 					<>
-						<li>Hello, {user.firstName}</li>
-						<li>{user.email}</li>
+						<li className="user-name">Hello, {user.firstName}</li>
+						<li className="user-email">{user.email}</li>
 						<li>
-							<NavLink to="/spots/current">Manage Spots</NavLink>
+							<NavLink className="manage-spots"to="/spots/current">Manage Spots</NavLink>
 						</li>
 						<li>
-							<button onClick={logout}>Log Out</button>
+							<button className="log-out-button" onClick={logout}>Log Out</button>
 						</li>
 					</>
 				) : (

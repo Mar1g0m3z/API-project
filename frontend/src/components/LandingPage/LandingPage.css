@@ -1,23 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+/* Basic page styles */
 .landing-page {
   font-family: "Montserrat", sans-serif;
   padding: 0px;
   margin: 0px;
 }
 
+/* Styles for the spots title */
 .spots-title {
   font-family: "Montserrat", sans-serif;
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 20px;
 }
 
+/* Grid layout for spot list */
 .spot-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 50px;
 }
 
+/* Styles for each spot tile */
 .spot-tile {
-  position: relative; /* Add this for tooltip positioning */
+  position: relative;
   max-width: 100%;
-  height: 600px;
+  height: 600px; /* Fixed height for larger screens */
   box-sizing: border-box;
   overflow: hidden;
   display: flex;
@@ -25,11 +34,10 @@
   justify-content: flex-start;
 }
 
+/* Tooltip styles */
 .tooltip {
   position: relative;
   text-align: center;
-  /* border: 1px solid black; */
-  /* border-radius: 3px; */
   background-color: white;
   visibility: hidden;
   opacity: 0;
@@ -39,56 +47,55 @@
   transition: opacity 0.3s ease-in-out;
 }
 
+/* Show tooltip on hover */
 .spot-tile:hover .tooltip {
   visibility: visible;
   transform: translateX(50%);
-  transition: opacity 0.3s ease-in-out;
   opacity: 0.5;
-  /* box-shadow: 5 2 2px rgba(0, 0, 0, 0.2); */
 }
 
+/* Styles for spot images */
 .spot-image {
   width: 100%;
-  height: 60%;
+  height: 60%; /* Fixed percentage height */
   object-fit: cover;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border: 2px solid rgba(0, 0, 0, 0.1);
 }
 
+/* Styles for spot name, link, info, and rating */
 .spot-name {
   font-size: 1.5rem;
   margin-bottom: 10px;
   padding: 0px;
 }
-
 .spot-link {
   text-decoration: none;
   color: inherit;
 }
-
-.display-rating,
-.spot-rating,
-.spot-price,
-.spot-location {
-  margin-top: 0;
-  padding: 0px;
-}
-
 .spot-info {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
-
 .spot-rating {
   display: flex;
   align-items: center;
   margin-right: 5px;
 }
 
-::before {
-  margin-right: 6px;
-  position: relative;
-  bottom: 1px;
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+  .spot-list {
+    grid-template-columns: 1fr; /* Single column layout for smaller screens */
+  }
+  .spot-tile {
+    width: 100%; /* Full width */
+    height: auto; /* Height adjusts to content */
+    margin: 0 auto; /* Center the tile */
+  }
+  .tooltip {
+    width: 80%; /* Adjust tooltip width */
+  }
 }

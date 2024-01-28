@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
 
 const SpotTile = ({ spot }) => {
-	const displayRating = spot.avgStars
-		? parseFloat(spot.avgStars).toFixed(1)
+	const rating = spot.avgRating || spot.avgStars
+	const displayRating = rating
+		? parseFloat(rating).toFixed(1)
 		: "New";
-
 	return (
 		<NavLink to={`/spots/${spot.id}`} className='spot-link' >
 			<div className='spot-tile'>

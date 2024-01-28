@@ -1,7 +1,7 @@
 import { useModal } from "../../context/Modal";
 import { deleteUserReview } from "../../store/review";
 import { useDispatch } from "react-redux";
-
+import "./Reviews.css"
 function DeleteReviewModal({ reviewId,spotId }) {
 	const dispatch = useDispatch();
 	const { closeModal } = useModal();
@@ -12,7 +12,7 @@ function DeleteReviewModal({ reviewId,spotId }) {
 	return (
 		<>
 			<div className="delete-review-modal">
-				<h3>Confirm Delete</h3>;
+				<h3>Confirm Delete</h3>
 				<p> Are you sure you want to delete this review?</p>
 				<button className="yes-delete" onClick={handleSubmit}>
 					Yes(Delete Review)

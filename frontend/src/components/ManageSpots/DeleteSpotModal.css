@@ -1,0 +1,49 @@
+.delete-spot-modal {
+  padding: 20px;
+  border-radius: 8px;
+
+  text-align: center;
+  max-width: 400px; /* Restricts the modal width */
+  margin: auto;
+}
+
+.delete-spot-modal h3 {
+  color: #e51e53; /* Red color to indicate caution */
+  margin-bottom: 15px;
+}
+
+.delete-spot-modal p {
+  color: #333; /* Standard text color for readability */
+  margin-bottom: 20px;
+}
+
+.delete-spot-modal button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: lightgray;
+  cursor: pointer;
+  font-size: 1rem;
+  margin: 5px; /* Space between buttons */
+  transition: background-color 0.3s;
+}
+
+.delete-spot-modal button:hover {
+  background-color: rgb(60, 207, 134);
+}
+
+.yes-delete-spot {
+  background-color: #e51e53; /* Red background for delete confirmation */
+  color: white;
+}
+
+.delete-spot-modal button:nth-child(3) {
+  color: white;
+}
+button.yes-delete-spot {
+  background-color: #cb1548;
+}
+
+button.yes-delete-spot:hover {
+  background-color: #b81040; /* Slightly darker red on hover */
+}
