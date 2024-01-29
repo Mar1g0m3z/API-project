@@ -45,6 +45,7 @@ function ProfileButton({ user }) {
 
 	return (
 		<>
+		<div className="profile-elements">
 			<button className="profile-button" onClick={toggleMenu}>
 				<i className="fas fa-user-circle fa-2xl" />
 			</button>
@@ -75,6 +76,7 @@ function ProfileButton({ user }) {
 					</>
 				)}
 			</ul>
+			</div>
 		</>
 	);
 }

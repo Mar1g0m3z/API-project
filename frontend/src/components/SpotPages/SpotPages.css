@@ -80,6 +80,7 @@ h1 {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border: 2px solid rgba(0, 0, 0, 0.1);
   width: 800px;
+  height: 500px;
   object-fit: cover;
 }
 
@@ -106,7 +107,8 @@ h1 {
 
   .spot-image-large,
   .image-list {
-    width: 100%;
+    width: 400px;
+    height: 300px;
   }
 
   .image-list {
