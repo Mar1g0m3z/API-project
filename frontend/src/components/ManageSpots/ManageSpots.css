@@ -5,8 +5,12 @@
   text-align: center;
 }
 
-.user-spots .spot-image {
-  height: 100%;
+.user-spots {
+  height: 400px;
+}
+
+.user-spots .spot-tile {
+  width: fit-content;
 }
 .user-spots h1 {
   font-family: "Montserrat", sans-serif;
@@ -16,6 +20,11 @@
   justify-content: center;
 }
 
+.user-spots-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
 .user-spots-list button.update {
   background-color: #4caf50;
   color: white;
@@ -60,6 +69,7 @@
   position: relative;
   margin-bottom: 50px;
   margin-top: -10px;
+  padding-right: 100px;
 }
 p.spot-price {
   display: flex;
