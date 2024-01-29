@@ -22,9 +22,9 @@
 .landing-page .spot-tile {
   position: relative;
   max-width: 100%;
-  height: 400px;
-  box-sizing: border-box;
   overflow: hidden;
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -32,12 +32,15 @@
 
 .tooltip {
   position: relative;
+  /* bottom: 100px; */
   text-align: center;
   background-color: white;
+  font-size: 14px;
+
   visibility: hidden;
   opacity: 0;
-  z-index: 1;
-  margin-bottom: 2px;
+  z-index: 3;
+  margin-bottom: 5px;
   width: 50%;
   transition: opacity 0.3s ease-in-out;
 }
@@ -49,9 +52,8 @@
 }
 
 .spot-image {
-  width: 100%;
-  height: 60%;
-  object-fit: cover;
+  height: 400px;
+  box-sizing: border-box;
   border-radius: 20px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border: 2px solid rgba(0, 0, 0, 0.1);
